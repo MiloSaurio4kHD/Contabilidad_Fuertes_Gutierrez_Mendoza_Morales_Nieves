@@ -12,6 +12,27 @@ namespace Contabilidad.Data
         private static readonly string RutaCatalogoSemilla = Path.Combine(CarpetaDatos, "cuentas_catalogo.json");
         private static readonly string RutaCuentas = Path.Combine(CarpetaDatos, "cuentas.json");
 
+        /// <summary>
+        /// Devuelve el JSON de cuentas tal cual esta guardado, para poder empaquetarlo
+        /// dentro de un archivo de estado sin tener que deserializar y volver a serializar.
+        /// </summary>
+        public string ObtenerJsonCrudo()
+        {
+            AsegurarArchivoInicial();
+            return File.ReadAllText(RutaCuentas);
+        }
+
+        /// <summary>
+        /// Reemplaza el archivo de cuentas con el JSON recibido tal cual (por ejemplo,
+        /// al restaurar un estado guardado antes). No valida duplicados: se asume que el
+        /// JSON ya es valido porque salio de esta misma app.
+        /// </summary>
+        public void GuardarJsonCrudo(string json)
+        {
+            Directory.CreateDirectory(CarpetaDatos);
+            File.WriteAllText(RutaCuentas, json);
+        }
+
         public List<Cuenta> ObtenerTodas()
         {
             AsegurarArchivoInicial();

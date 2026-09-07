@@ -34,13 +34,13 @@ namespace Contabilidad.Data
                 {
                     decimal monto = cuentaMayor.TotalHaber - cuentaMayor.TotalDebe;
                     if (monto == 0) continue;
-                    resultado.Ingresos.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = monto });
+                    resultado.Ingresos.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = monto, Codigo = cuentaMayor.Codigo });
                 }
                 else if (cuenta.Tipo == TipoCuenta.Gastos)
                 {
                     decimal monto = cuentaMayor.TotalDebe - cuentaMayor.TotalHaber;
                     if (monto == 0) continue;
-                    resultado.Gastos.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = monto });
+                    resultado.Gastos.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = monto, Codigo = cuentaMayor.Codigo });
                 }
             }
 

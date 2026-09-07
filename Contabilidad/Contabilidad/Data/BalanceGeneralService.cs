@@ -36,25 +36,25 @@ namespace Contabilidad.Data
                 switch (cuenta.Tipo)
                 {
                     case TipoCuenta.ActivoCorriente:
-                        balance.ActivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo });
+                        balance.ActivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
                         break;
 
                     case TipoCuenta.ActivoNoCorriente:
                         // Si el saldo neto quedo acreedor (depreciacion/amortizacion acumulada,
                         // por ejemplo), Saldo ya es negativo y se resta solo al sumar la lista.
-                        balance.ActivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo });
+                        balance.ActivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
                         break;
 
                     case TipoCuenta.PasivoCorriente:
-                        balance.PasivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo });
+                        balance.PasivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
                         break;
 
                     case TipoCuenta.PasivoNoCorriente:
-                        balance.PasivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo });
+                        balance.PasivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
                         break;
 
                     case TipoCuenta.Patrimonio:
-                        balance.Patrimonio.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo });
+                        balance.Patrimonio.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
                         break;
                 }
             }

@@ -27,6 +27,34 @@ namespace Contabilidad.Data
             return ajustes.OrderBy(a => a.Numero).ToList();
         }
 
+        /// <summary>
+        /// Devuelve el JSON de ajustes tal cual esta guardado, para empaquetarlo dentro
+        /// de un archivo de estado sin deserializar y volver a serializar.
+        /// </summary>
+        public string ObtenerJsonCrudo()
+        {
+            AsegurarArchivoInicial();
+            return File.ReadAllText(RutaAjustes);
+        }
+
+        /// <summary>
+        /// Reemplaza el archivo de ajustes con el JSON recibido tal cual (restaurar un
+        /// estado guardado antes, o vaciarlo con "[]" al eliminar el estado).
+        /// </summary>
+        public void GuardarJsonCrudo(string json)
+        {
+            Directory.CreateDirectory(CarpetaDatos);
+            File.WriteAllText(RutaAjustes, json);
+        }
+
+        /// <summary>
+        /// Elimina todos los ajustes del Libro de Ajustes (no toca el catalogo de cuentas).
+        /// </summary>
+        public void EliminarTodos()
+        {
+            Guardar(new List<Ajuste>());
+        }
+
         public int ObtenerSiguienteNumero()
         {
             var ajustes = ObtenerTodos();

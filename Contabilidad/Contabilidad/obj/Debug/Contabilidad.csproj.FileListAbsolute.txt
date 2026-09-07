@@ -23,3 +23,5 @@ C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.csp
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.csproj.CoreCompileInputs.cache
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.exe
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.pdb
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Excel.ico
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Upload.ico

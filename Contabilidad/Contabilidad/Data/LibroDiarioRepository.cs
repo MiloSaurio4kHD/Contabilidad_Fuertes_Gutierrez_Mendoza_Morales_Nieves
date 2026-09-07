@@ -26,6 +26,34 @@ namespace Contabilidad.Data
             return asientos.OrderBy(a => a.Numero).ToList();
         }
 
+        /// <summary>
+        /// Devuelve el JSON de asientos tal cual esta guardado, para empaquetarlo dentro
+        /// de un archivo de estado sin deserializar y volver a serializar.
+        /// </summary>
+        public string ObtenerJsonCrudo()
+        {
+            AsegurarArchivoInicial();
+            return File.ReadAllText(RutaAsientos);
+        }
+
+        /// <summary>
+        /// Reemplaza el archivo de asientos con el JSON recibido tal cual (restaurar un
+        /// estado guardado antes, o vaciarlo con "[]" al eliminar el estado).
+        /// </summary>
+        public void GuardarJsonCrudo(string json)
+        {
+            Directory.CreateDirectory(CarpetaDatos);
+            File.WriteAllText(RutaAsientos, json);
+        }
+
+        /// <summary>
+        /// Elimina todos los asientos del Libro Diario (no toca el catalogo de cuentas).
+        /// </summary>
+        public void EliminarTodos()
+        {
+            Guardar(new List<AsientoContable>());
+        }
+
         public int ObtenerSiguienteNumero()
         {
             var asientos = ObtenerTodos();

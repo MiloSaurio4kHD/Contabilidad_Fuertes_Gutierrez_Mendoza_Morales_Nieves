@@ -16,6 +16,8 @@ namespace Contabilidad
         private readonly LibroMayorService _libroMayorService = new LibroMayorService();
         private readonly EstadoResultadoService _estadoResultadoService = new EstadoResultadoService();
         private readonly BalanceGeneralService _balanceGeneralService = new BalanceGeneralService();
+        private readonly EstadoService _estadoService = new EstadoService();
+        private readonly ExportacionExcelService _exportacionExcelService = new ExportacionExcelService();
         private System.Collections.Generic.List<CuentaMayor> _ultimoLibroMayor = new System.Collections.Generic.List<CuentaMayor>();
         private readonly ResumenLibroDataGridView resumenLibroDiario = new ResumenLibroDataGridView();
         private readonly ResumenLibroDataGridView resumenLibroAjustes = new ResumenLibroDataGridView();
@@ -26,6 +28,7 @@ namespace Contabilidad
             pnlLibroMayor.Resize += (sender, e) => RenderizarLibroMayor();
             ConfigurarIconos();
             ConfigurarResumenes();
+            ConfigurarBotonesEstado();
         }
 
         /// <summary>
@@ -46,6 +49,164 @@ namespace Contabilidad
             resumenLibroAjustes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             resumenLibroAjustes.Location = new System.Drawing.Point(txtSaldoHaberAjuste.Left, txtSaldoHaberAjuste.Bottom + 25);
             tbpLibroAjustado.Controls.Add(resumenLibroAjustes);
+        }
+
+        /// <summary>
+        /// Agrega, en la pestaña Configuración, los botones de Guardar/Cargar/Eliminar
+        /// estado y Exportar a Excel, debajo de los de Crear/Editar/Eliminar cuenta.
+        /// Se agregan por codigo (no en el Designer) por la misma razon que el Resumen.
+        /// </summary>
+        private void ConfigurarBotonesEstado()
+        {
+            if (GridStyleHelper.EnDisenio) return;
+
+            var lblSeparador = new Label
+            {
+                Text = "Respaldo y exportación",
+                AutoSize = true,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, btnEliminarCuenta.Bottom + 20)
+            };
+
+            var btnGuardarEstado = new Button
+            {
+                Text = "Guardar estado",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, lblSeparador.Bottom + 8),
+                Size = btnEliminarCuenta.Size
+            };
+            btnGuardarEstado.Click += btnGuardarEstado_Click;
+            IconHelper.AplicarIconoBoton(btnGuardarEstado, "Save.ico");
+
+            var btnCargarEstado = new Button
+            {
+                Text = "Cargar estado",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, btnGuardarEstado.Bottom + 8),
+                Size = btnEliminarCuenta.Size
+            };
+            btnCargarEstado.Click += btnCargarEstado_Click;
+            IconHelper.AplicarIconoBoton(btnCargarEstado, "Upload.ico");
+
+            var btnEliminarEstado = new Button
+            {
+                Text = "Eliminar estado",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, btnCargarEstado.Bottom + 8),
+                Size = btnEliminarCuenta.Size
+            };
+            btnEliminarEstado.Click += btnEliminarEstado_Click;
+            IconHelper.AplicarIconoBoton(btnEliminarEstado, "Remove.ico");
+
+            var btnExportarExcel = new Button
+            {
+                Text = "Exportar a Excel",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, btnEliminarEstado.Bottom + 8),
+                Size = btnEliminarCuenta.Size
+            };
+            btnExportarExcel.Click += btnExportarExcel_Click;
+            IconHelper.AplicarIconoBoton(btnExportarExcel, "Excel.ico");
+
+            tblConfiguración.Controls.Add(lblSeparador);
+            tblConfiguración.Controls.Add(btnGuardarEstado);
+            tblConfiguración.Controls.Add(btnCargarEstado);
+            tblConfiguración.Controls.Add(btnEliminarEstado);
+            tblConfiguración.Controls.Add(btnExportarExcel);
+        }
+
+        private void btnGuardarEstado_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "Archivo de estado (*.json)|*.json";
+                dlg.FileName = "estado_contabilidad.json";
+                dlg.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+
+                if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+                try
+                {
+                    _estadoService.Guardar(dlg.FileName);
+                    MessageBox.Show(this, "Estado guardado correctamente en:\n" + dlg.FileName,
+                        "Guardar estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo guardar el estado: " + ex.Message,
+                        "Guardar estado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnCargarEstado_Click(object sender, EventArgs e)
+        {
+            var confirmacion = MessageBox.Show(this,
+                "Esto va a reemplazar TODOS los datos actuales (cuentas, asientos y ajustes) con los del archivo que selecciones. ¿Desea continuar?",
+                "Cargar estado", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirmacion != DialogResult.Yes) return;
+
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Filter = "Archivo de estado (*.json)|*.json";
+                dlg.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+
+                if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+                try
+                {
+                    _estadoService.Cargar(dlg.FileName);
+                    CargarCuentas();
+                    CargarLibroDiario();
+                    CargarLibroAjustes();
+                    ActualizarReportesDerivados();
+                    MessageBox.Show(this, "Estado cargado correctamente.",
+                        "Cargar estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo cargar el estado: " + ex.Message,
+                        "Cargar estado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnEliminarEstado_Click(object sender, EventArgs e)
+        {
+            var confirmacion = MessageBox.Show(this,
+                "¿Desea eliminar TODOS los asientos y ajustes? Las cuentas no se verán afectadas. Esta acción no se puede deshacer.",
+                "Eliminar estado", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirmacion != DialogResult.Yes) return;
+
+            _estadoService.EliminarAsientosYAjustes();
+            CargarLibroDiario();
+            CargarLibroAjustes();
+            ActualizarReportesDerivados();
+            MessageBox.Show(this, "Se eliminaron todos los asientos y ajustes. Las cuentas se conservaron.",
+                "Eliminar estado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "Libro de Excel (*.xlsx)|*.xlsx";
+                dlg.FileName = "contabilidad_" + DateTime.Now.ToString("ddMMyy_HHmmss") + ".xlsx";
+
+                if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+                try
+                {
+                    _exportacionExcelService.Exportar(dlg.FileName);
+                    MessageBox.Show(this, "Archivo exportado correctamente en:\n" + dlg.FileName,
+                        "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo exportar: " + ex.Message,
+                        "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         /// <summary>
@@ -143,85 +304,13 @@ namespace Contabilidad
         private void CargarEstadoResultado()
         {
             var er = _estadoResultadoService.Generar();
-            var filas = new System.Collections.Generic.List<FilaReporte>();
-
-            filas.Add(new FilaReporte("INGRESOS", null, TipoFilaReporte.Seccion));
-            foreach (var linea in er.Ingresos)
-            {
-                filas.Add(new FilaReporte(linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Ingresos", er.TotalIngresos, TipoFilaReporte.Subtotal));
-
-            filas.Add(new FilaReporte("GASTOS OPERATIVOS Y NO OPERATIVOS (-)", null, TipoFilaReporte.Seccion));
-            foreach (var linea in er.Gastos)
-            {
-                filas.Add(new FilaReporte(linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Gastos", er.TotalGastos, TipoFilaReporte.Subtotal));
-
-            filas.Add(new FilaReporte("CÁLCULO DE UTILIDAD", null, TipoFilaReporte.Seccion));
-            filas.Add(new FilaReporte("Utilidad antes de participación", er.UtilidadAntesParticipacion, TipoFilaReporte.Detalle));
-            filas.Add(new FilaReporte("(-) 15% Participación Trabajadores", -er.Participacion15, TipoFilaReporte.Detalle));
-            filas.Add(new FilaReporte("Utilidad antes de Impuesto a la Renta", er.UtilidadAntesImpuesto, TipoFilaReporte.Detalle));
-            filas.Add(new FilaReporte("(-) 25% Impuesto a la Renta", -er.ImpuestoRenta25, TipoFilaReporte.Detalle));
-            filas.Add(new FilaReporte("Utilidad del Ejercicio", er.UtilidadEjercicio, TipoFilaReporte.Total));
-
-            dgvEstadoResultado.CargarFilas(filas);
+            dgvEstadoResultado.CargarFilas(FilaReporteBuilder.ConstruirFilasEstadoResultado(er));
         }
 
         private void CargarBalanceGeneral()
         {
             var bg = _balanceGeneralService.Generar();
-            var filas = new System.Collections.Generic.List<FilaReporte>();
-
-            filas.Add(new FilaReporte("ACTIVOS", null, TipoFilaReporte.Seccion));
-            filas.Add(new FilaReporte("Activos Corrientes", null, TipoFilaReporte.Detalle));
-            foreach (var linea in bg.ActivosCorrientes)
-            {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Activos Corrientes", bg.TotalActivoCorriente, TipoFilaReporte.Subtotal));
-
-            filas.Add(new FilaReporte("Activos No Corrientes", null, TipoFilaReporte.Detalle));
-            foreach (var linea in bg.ActivosNoCorrientes)
-            {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Activos No Corrientes", bg.TotalActivoNoCorriente, TipoFilaReporte.Subtotal));
-            filas.Add(new FilaReporte("TOTAL ACTIVOS", bg.TotalActivo, TipoFilaReporte.Total));
-
-            filas.Add(new FilaReporte("PASIVOS", null, TipoFilaReporte.Seccion));
-            filas.Add(new FilaReporte("Pasivos Corrientes", null, TipoFilaReporte.Detalle));
-            foreach (var linea in bg.PasivosCorrientes)
-            {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Pasivos Corrientes", bg.TotalPasivoCorriente, TipoFilaReporte.Subtotal));
-
-            filas.Add(new FilaReporte("Pasivos No Corrientes", null, TipoFilaReporte.Detalle));
-            foreach (var linea in bg.PasivosNoCorrientes)
-            {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("Total Pasivos No Corrientes", bg.TotalPasivoNoCorriente, TipoFilaReporte.Subtotal));
-            filas.Add(new FilaReporte("TOTAL PASIVOS", bg.TotalPasivo, TipoFilaReporte.Total));
-
-            filas.Add(new FilaReporte("PATRIMONIO", null, TipoFilaReporte.Seccion));
-            foreach (var linea in bg.Patrimonio)
-            {
-                filas.Add(new FilaReporte(linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
-            }
-            filas.Add(new FilaReporte("TOTAL PATRIMONIO", bg.TotalPatrimonio, TipoFilaReporte.Subtotal));
-
-            filas.Add(new FilaReporte("TOTAL PASIVOS + PATRIMONIO", bg.TotalPasivoMasPatrimonio, TipoFilaReporte.Total));
-
-            filas.Add(new FilaReporte("ECUACIÓN CONTABLE: Activo = Pasivo + Patrimonio",
-                null, TipoFilaReporte.Seccion));
-            filas.Add(new FilaReporte(
-                string.Format("{0:N2} {1} {2:N2}", bg.TotalActivo, bg.Cuadra ? "=" : "≠", bg.TotalPasivoMasPatrimonio),
-                null, bg.Cuadra ? TipoFilaReporte.Subtotal : TipoFilaReporte.Nota));
-
-            dgvBalanceGeneral.CargarFilas(filas);
+            dgvBalanceGeneral.CargarFilas(FilaReporteBuilder.ConstruirFilasBalanceGeneral(bg));
         }
 
         /// <summary>
