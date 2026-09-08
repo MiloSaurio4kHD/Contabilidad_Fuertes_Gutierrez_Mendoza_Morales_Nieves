@@ -22,7 +22,7 @@ OutputBaseFilename=Contabilidad-Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-SetupIconFile=..\Contabilidad\Icons\Dashboard.ico
+SetupIconFile=..\Contabilidad\Icons\iconoContabilidad.ico
 
 [Languages]
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"

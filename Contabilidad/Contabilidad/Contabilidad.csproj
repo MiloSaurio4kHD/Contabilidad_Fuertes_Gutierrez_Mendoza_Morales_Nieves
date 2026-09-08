@@ -10,7 +10,7 @@
     <AssemblyName>Contabilidad</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>Icons\Dashboard.ico</ApplicationIcon>
+    <ApplicationIcon>Icons\iconoContabilidad.ico</ApplicationIcon>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
