@@ -1,6 +1,5 @@
 <Solution>
-  <Project Path="Contabilidad-Instalador/Contabilidad-Instalador.vdproj" Type="Installer">
+  <Project Path="Contabilidad/Contabilidad.csproj" Id="9237a1b4-fddf-41f3-9c66-d4e3e7a211b4">
     <Build />
   </Project>
-  <Project Path="Contabilidad/Contabilidad.csproj" Id="9237a1b4-fddf-41f3-9c66-d4e3e7a211b4" />
 </Solution>

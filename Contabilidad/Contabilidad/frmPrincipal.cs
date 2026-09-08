@@ -527,12 +527,24 @@ namespace Contabilidad
             var bg = _ultimoBalanceGeneral;
             var er = _ultimoEstadoResultado;
 
-            _chartBalance.Series[0].Points[0].SetValueY(bg.TotalActivo);
-            _chartBalance.Series[0].Points[1].SetValueY(bg.TotalPasivo);
-            _chartBalance.Series[0].Points[2].SetValueY(bg.TotalPatrimonio);
+            // No se actualiza con Points[i].SetValueY(...): el control Chart no siempre
+            // redibuja cuando se muta un punto existente asi (se ve una vez armado el
+            // Dashboard, pero se queda con los valores viejos despues de "Cargar estado").
+            // Points.Clear() + Points.AddXY(...) sí fuerza el redibujado, igual que ya
+            // se hacia en el grafico de Evolucion Mensual.
+            _chartBalance.Series[0].Points.Clear();
+            _chartBalance.Series[0].Points.AddXY("Activos", bg.TotalActivo);
+            _chartBalance.Series[0].Points.AddXY("Pasivos", bg.TotalPasivo);
+            _chartBalance.Series[0].Points.AddXY("Patrimonio", bg.TotalPatrimonio);
+            _chartBalance.Series[0].Points[0].Color = GridStyleHelper.ColorEncabezado;
+            _chartBalance.Series[0].Points[1].Color = ColorVerdeGrisaceo;
+            _chartBalance.Series[0].Points[2].Color = ColorVerdeClaro;
 
-            _chartResultados.Series[0].Points[0].SetValueY(er.TotalIngresos);
-            _chartResultados.Series[0].Points[1].SetValueY(er.TotalGastos);
+            _chartResultados.Series[0].Points.Clear();
+            _chartResultados.Series[0].Points.AddXY("Ingresos", er.TotalIngresos);
+            _chartResultados.Series[0].Points.AddXY("Gastos", er.TotalGastos);
+            _chartResultados.Series[0].Points[0].Color = GridStyleHelper.ColorEncabezado;
+            _chartResultados.Series[0].Points[1].Color = ColorRojo;
 
             bool utilidadPositiva = er.UtilidadEjercicio >= 0;
             _lblUtilidadEjercicio.BackColor = utilidadPositiva ? ColorVerdeOscuro : ColorRojo;
