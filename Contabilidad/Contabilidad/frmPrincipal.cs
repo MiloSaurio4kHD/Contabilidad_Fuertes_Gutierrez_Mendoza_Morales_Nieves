@@ -578,7 +578,7 @@ namespace Contabilidad
             {
                 dlg.Filter = "Archivo de estado (*.json)|*.json";
                 dlg.FileName = "estado_contabilidad.json";
-                dlg.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+                dlg.InitialDirectory = RutasApp.CarpetaDatos;
 
                 if (dlg.ShowDialog(this) != DialogResult.OK) return;
 
@@ -606,7 +606,7 @@ namespace Contabilidad
             using (var dlg = new OpenFileDialog())
             {
                 dlg.Filter = "Archivo de estado (*.json)|*.json";
-                dlg.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+                dlg.InitialDirectory = RutasApp.CarpetaDatos;
 
                 if (dlg.ShowDialog(this) != DialogResult.OK) return;
 

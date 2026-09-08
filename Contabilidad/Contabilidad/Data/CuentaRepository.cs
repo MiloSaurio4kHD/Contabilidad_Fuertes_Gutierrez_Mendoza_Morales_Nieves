@@ -9,8 +9,8 @@ namespace Contabilidad.Data
 {
     public class CuentaRepository
     {
-        private static readonly string CarpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
-        private static readonly string RutaCatalogoSemilla = Path.Combine(CarpetaDatos, "cuentas_catalogo.json");
+        private static readonly string CarpetaDatos = RutasApp.CarpetaDatos;
+        private static readonly string RutaCatalogoSemilla = Path.Combine(RutasApp.CarpetaDatosSemilla, "cuentas_catalogo.json");
         private static readonly string RutaCuentas = Path.Combine(CarpetaDatos, "cuentas.json");
 
         /// <summary>

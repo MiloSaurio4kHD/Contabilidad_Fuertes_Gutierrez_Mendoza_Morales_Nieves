@@ -28,6 +28,7 @@ namespace Contabilidad
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarAjusteLibroDiario));
             this.dgvAjusteIndividual = new System.Windows.Forms.DataGridView();
             this.txtGlosa = new System.Windows.Forms.TextBox();
             this.btnAgregarAjuste = new System.Windows.Forms.Button();
@@ -57,6 +58,7 @@ namespace Contabilidad
             this.dgvAjusteIndividual.Location = new System.Drawing.Point(13, 186);
             this.dgvAjusteIndividual.Margin = new System.Windows.Forms.Padding(4);
             this.dgvAjusteIndividual.Name = "dgvAjusteIndividual";
+            this.dgvAjusteIndividual.RowHeadersWidth = 51;
             this.dgvAjusteIndividual.Size = new System.Drawing.Size(1028, 191);
             this.dgvAjusteIndividual.TabIndex = 6;
             this.dgvAjusteIndividual.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAjusteIndividual_CellContentClick);
@@ -103,7 +105,7 @@ namespace Contabilidad
             this.rbHaber.Location = new System.Drawing.Point(129, 23);
             this.rbHaber.Margin = new System.Windows.Forms.Padding(4);
             this.rbHaber.Name = "rbHaber";
-            this.rbHaber.Size = new System.Drawing.Size(63, 20);
+            this.rbHaber.Size = new System.Drawing.Size(66, 20);
             this.rbHaber.TabIndex = 1;
             this.rbHaber.TabStop = true;
             this.rbHaber.Text = "Haber";
@@ -115,7 +117,7 @@ namespace Contabilidad
             this.rbDebe.Location = new System.Drawing.Point(8, 23);
             this.rbDebe.Margin = new System.Windows.Forms.Padding(4);
             this.rbDebe.Name = "rbDebe";
-            this.rbDebe.Size = new System.Drawing.Size(59, 20);
+            this.rbDebe.Size = new System.Drawing.Size(62, 20);
             this.rbDebe.TabIndex = 0;
             this.rbDebe.TabStop = true;
             this.rbDebe.Text = "Debe";
@@ -242,7 +244,7 @@ namespace Contabilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1054, 449);
+            this.ClientSize = new System.Drawing.Size(1052, 441);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -258,6 +260,7 @@ namespace Contabilidad
             this.Controls.Add(this.btnAgregarAjuste);
             this.Controls.Add(this.txtGlosa);
             this.Controls.Add(this.dgvAjusteIndividual);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1070, 488);

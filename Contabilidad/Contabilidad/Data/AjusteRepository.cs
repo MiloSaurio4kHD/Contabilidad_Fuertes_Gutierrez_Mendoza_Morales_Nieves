@@ -11,7 +11,7 @@ namespace Contabilidad.Data
     public class AjusteRepository
     {
         private const string FormatoFecha = "yyyy-MM-dd";
-        private static readonly string CarpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+        private static readonly string CarpetaDatos = RutasApp.CarpetaDatos;
         private static readonly string RutaAjustes = Path.Combine(CarpetaDatos, "ajustes.json");
 
         public List<Ajuste> ObtenerTodos()

@@ -10,7 +10,7 @@ namespace Contabilidad.Data
     public class LibroDiarioRepository
     {
         private const string FormatoFecha = "yyyy-MM-dd";
-        private static readonly string CarpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+        private static readonly string CarpetaDatos = RutasApp.CarpetaDatos;
         private static readonly string RutaAsientos = Path.Combine(CarpetaDatos, "asientos.json");
 
         public List<AsientoContable> ObtenerTodos()

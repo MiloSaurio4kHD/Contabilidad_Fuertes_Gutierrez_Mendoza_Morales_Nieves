@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarAsientoLibroDiario));
             this.dgvAsientoIndividual = new System.Windows.Forms.DataGridView();
             this.txtGlosa = new System.Windows.Forms.TextBox();
             this.btnAgregarAsiento = new System.Windows.Forms.Button();
@@ -57,6 +58,7 @@
             this.dgvAsientoIndividual.Location = new System.Drawing.Point(13, 186);
             this.dgvAsientoIndividual.Margin = new System.Windows.Forms.Padding(4);
             this.dgvAsientoIndividual.Name = "dgvAsientoIndividual";
+            this.dgvAsientoIndividual.RowHeadersWidth = 51;
             this.dgvAsientoIndividual.Size = new System.Drawing.Size(1028, 191);
             this.dgvAsientoIndividual.TabIndex = 6;
             this.dgvAsientoIndividual.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsientoIndividual_CellContentClick);
@@ -104,7 +106,7 @@
             this.rbHaber.Location = new System.Drawing.Point(129, 23);
             this.rbHaber.Margin = new System.Windows.Forms.Padding(4);
             this.rbHaber.Name = "rbHaber";
-            this.rbHaber.Size = new System.Drawing.Size(63, 20);
+            this.rbHaber.Size = new System.Drawing.Size(66, 20);
             this.rbHaber.TabIndex = 1;
             this.rbHaber.TabStop = true;
             this.rbHaber.Text = "Haber";
@@ -117,7 +119,7 @@
             this.rbDebe.Location = new System.Drawing.Point(8, 23);
             this.rbDebe.Margin = new System.Windows.Forms.Padding(4);
             this.rbDebe.Name = "rbDebe";
-            this.rbDebe.Size = new System.Drawing.Size(59, 20);
+            this.rbDebe.Size = new System.Drawing.Size(62, 20);
             this.rbDebe.TabIndex = 0;
             this.rbDebe.TabStop = true;
             this.rbDebe.Text = "Debe";
@@ -250,7 +252,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1054, 449);
+            this.ClientSize = new System.Drawing.Size(1052, 441);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -266,6 +268,7 @@
             this.Controls.Add(this.btnAgregarAsiento);
             this.Controls.Add(this.txtGlosa);
             this.Controls.Add(this.dgvAsientoIndividual);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1070, 488);

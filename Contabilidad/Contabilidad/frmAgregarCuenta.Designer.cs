@@ -28,6 +28,7 @@ namespace Contabilidad
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarCuenta));
             this.lblCodigo = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
@@ -58,7 +59,7 @@ namespace Contabilidad
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(160, 21);
-            this.txtCodigo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCodigo.Margin = new System.Windows.Forms.Padding(4);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(199, 22);
             this.txtCodigo.TabIndex = 1;
@@ -76,7 +77,7 @@ namespace Contabilidad
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(160, 60);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(372, 22);
             this.txtNombre.TabIndex = 3;
@@ -91,9 +92,9 @@ namespace Contabilidad
             this.gpTipo.Controls.Add(this.rbIngresos);
             this.gpTipo.Controls.Add(this.rbGastos);
             this.gpTipo.Location = new System.Drawing.Point(28, 105);
-            this.gpTipo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpTipo.Margin = new System.Windows.Forms.Padding(4);
             this.gpTipo.Name = "gpTipo";
-            this.gpTipo.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gpTipo.Padding = new System.Windows.Forms.Padding(4);
             this.gpTipo.Size = new System.Drawing.Size(505, 271);
             this.gpTipo.TabIndex = 4;
             this.gpTipo.TabStop = false;
@@ -103,9 +104,9 @@ namespace Contabilidad
             // 
             this.rbActivoCorriente.AutoSize = true;
             this.rbActivoCorriente.Location = new System.Drawing.Point(29, 34);
-            this.rbActivoCorriente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbActivoCorriente.Margin = new System.Windows.Forms.Padding(4);
             this.rbActivoCorriente.Name = "rbActivoCorriente";
-            this.rbActivoCorriente.Size = new System.Drawing.Size(117, 20);
+            this.rbActivoCorriente.Size = new System.Drawing.Size(120, 20);
             this.rbActivoCorriente.TabIndex = 0;
             this.rbActivoCorriente.TabStop = true;
             this.rbActivoCorriente.Text = "Activo corriente";
@@ -115,9 +116,9 @@ namespace Contabilidad
             // 
             this.rbActivoNoCorriente.AutoSize = true;
             this.rbActivoNoCorriente.Location = new System.Drawing.Point(29, 63);
-            this.rbActivoNoCorriente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbActivoNoCorriente.Margin = new System.Windows.Forms.Padding(4);
             this.rbActivoNoCorriente.Name = "rbActivoNoCorriente";
-            this.rbActivoNoCorriente.Size = new System.Drawing.Size(135, 20);
+            this.rbActivoNoCorriente.Size = new System.Drawing.Size(138, 20);
             this.rbActivoNoCorriente.TabIndex = 1;
             this.rbActivoNoCorriente.TabStop = true;
             this.rbActivoNoCorriente.Text = "Activo no corriente";
@@ -127,9 +128,9 @@ namespace Contabilidad
             // 
             this.rbPasivoCorriente.AutoSize = true;
             this.rbPasivoCorriente.Location = new System.Drawing.Point(29, 91);
-            this.rbPasivoCorriente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbPasivoCorriente.Margin = new System.Windows.Forms.Padding(4);
             this.rbPasivoCorriente.Name = "rbPasivoCorriente";
-            this.rbPasivoCorriente.Size = new System.Drawing.Size(122, 20);
+            this.rbPasivoCorriente.Size = new System.Drawing.Size(125, 20);
             this.rbPasivoCorriente.TabIndex = 2;
             this.rbPasivoCorriente.TabStop = true;
             this.rbPasivoCorriente.Text = "Pasivo corriente";
@@ -139,9 +140,9 @@ namespace Contabilidad
             // 
             this.rbPasivoNoCorriente.AutoSize = true;
             this.rbPasivoNoCorriente.Location = new System.Drawing.Point(29, 119);
-            this.rbPasivoNoCorriente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbPasivoNoCorriente.Margin = new System.Windows.Forms.Padding(4);
             this.rbPasivoNoCorriente.Name = "rbPasivoNoCorriente";
-            this.rbPasivoNoCorriente.Size = new System.Drawing.Size(140, 20);
+            this.rbPasivoNoCorriente.Size = new System.Drawing.Size(143, 20);
             this.rbPasivoNoCorriente.TabIndex = 3;
             this.rbPasivoNoCorriente.TabStop = true;
             this.rbPasivoNoCorriente.Text = "Pasivo no corriente";
@@ -151,9 +152,9 @@ namespace Contabilidad
             // 
             this.rbPatrimonio.AutoSize = true;
             this.rbPatrimonio.Location = new System.Drawing.Point(29, 148);
-            this.rbPatrimonio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbPatrimonio.Margin = new System.Windows.Forms.Padding(4);
             this.rbPatrimonio.Name = "rbPatrimonio";
-            this.rbPatrimonio.Size = new System.Drawing.Size(89, 20);
+            this.rbPatrimonio.Size = new System.Drawing.Size(92, 20);
             this.rbPatrimonio.TabIndex = 4;
             this.rbPatrimonio.TabStop = true;
             this.rbPatrimonio.Text = "Patrimonio";
@@ -163,9 +164,9 @@ namespace Contabilidad
             // 
             this.rbIngresos.AutoSize = true;
             this.rbIngresos.Location = new System.Drawing.Point(29, 176);
-            this.rbIngresos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbIngresos.Margin = new System.Windows.Forms.Padding(4);
             this.rbIngresos.Name = "rbIngresos";
-            this.rbIngresos.Size = new System.Drawing.Size(77, 20);
+            this.rbIngresos.Size = new System.Drawing.Size(80, 20);
             this.rbIngresos.TabIndex = 5;
             this.rbIngresos.TabStop = true;
             this.rbIngresos.Text = "Ingresos";
@@ -175,9 +176,9 @@ namespace Contabilidad
             // 
             this.rbGastos.AutoSize = true;
             this.rbGastos.Location = new System.Drawing.Point(29, 204);
-            this.rbGastos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbGastos.Margin = new System.Windows.Forms.Padding(4);
             this.rbGastos.Name = "rbGastos";
-            this.rbGastos.Size = new System.Drawing.Size(68, 20);
+            this.rbGastos.Size = new System.Drawing.Size(71, 20);
             this.rbGastos.TabIndex = 6;
             this.rbGastos.TabStop = true;
             this.rbGastos.Text = "Gastos";
@@ -186,7 +187,7 @@ namespace Contabilidad
             // btnGuardarCuenta
             // 
             this.btnGuardarCuenta.Location = new System.Drawing.Point(160, 394);
-            this.btnGuardarCuenta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuardarCuenta.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarCuenta.Name = "btnGuardarCuenta";
             this.btnGuardarCuenta.Size = new System.Drawing.Size(173, 37);
             this.btnGuardarCuenta.TabIndex = 5;
@@ -198,7 +199,7 @@ namespace Contabilidad
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancelar.Location = new System.Drawing.Point(347, 394);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(133, 37);
             this.btnCancelar.TabIndex = 6;
@@ -221,7 +222,8 @@ namespace Contabilidad
             this.Controls.Add(this.txtCodigo);
             this.Controls.Add(this.lblCodigo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAgregarCuenta";

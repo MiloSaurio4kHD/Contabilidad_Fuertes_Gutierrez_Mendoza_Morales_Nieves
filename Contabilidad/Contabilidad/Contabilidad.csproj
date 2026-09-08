@@ -88,6 +88,7 @@
     <Compile Include="Models\FilaReporte.cs" />
     <Compile Include="Models\PuntoEvolucionMensual.cs" />
     <Compile Include="Data\JsonHelper.cs" />
+    <Compile Include="Data\RutasApp.cs" />
     <Compile Include="Data\CuentaRepository.cs" />
     <Compile Include="Data\LibroDiarioRepository.cs" />
     <Compile Include="Data\AjusteRepository.cs" />
@@ -173,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\cuentas_catalogo.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\Add.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
