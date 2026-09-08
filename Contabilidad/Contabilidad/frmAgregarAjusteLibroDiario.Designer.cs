@@ -52,6 +52,7 @@ namespace Contabilidad
             // 
             // dgvAjusteIndividual
             // 
+            this.dgvAjusteIndividual.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dgvAjusteIndividual.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAjusteIndividual.Location = new System.Drawing.Point(13, 186);
             this.dgvAjusteIndividual.Margin = new System.Windows.Forms.Padding(4);
@@ -62,6 +63,7 @@ namespace Contabilidad
             // 
             // txtGlosa
             // 
+            this.txtGlosa.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtGlosa.Location = new System.Drawing.Point(13, 98);
             this.txtGlosa.Margin = new System.Windows.Forms.Padding(4);
             this.txtGlosa.Multiline = true;
@@ -71,6 +73,7 @@ namespace Contabilidad
             // 
             // btnAgregarAjuste
             // 
+            this.btnAgregarAjuste.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnAgregarAjuste.Location = new System.Drawing.Point(825, 385);
             this.btnAgregarAjuste.Margin = new System.Windows.Forms.Padding(4);
             this.btnAgregarAjuste.Name = "btnAgregarAjuste";
@@ -82,6 +85,7 @@ namespace Contabilidad
             // 
             // gpDebeHaber
             // 
+            this.gpDebeHaber.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gpDebeHaber.Controls.Add(this.rbHaber);
             this.gpDebeHaber.Controls.Add(this.rbDebe);
             this.gpDebeHaber.Location = new System.Drawing.Point(430, 28);
@@ -119,6 +123,7 @@ namespace Contabilidad
             // 
             // nudCantidad
             // 
+            this.nudCantidad.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.nudCantidad.Location = new System.Drawing.Point(699, 48);
             this.nudCantidad.Margin = new System.Windows.Forms.Padding(4);
             this.nudCantidad.Name = "nudCantidad";
@@ -127,6 +132,7 @@ namespace Contabilidad
             // 
             // btnAgregarCuenta
             // 
+            this.btnAgregarCuenta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnAgregarCuenta.Location = new System.Drawing.Point(865, 44);
             this.btnAgregarCuenta.Margin = new System.Windows.Forms.Padding(4);
             this.btnAgregarCuenta.Name = "btnAgregarCuenta";
@@ -138,6 +144,7 @@ namespace Contabilidad
             // 
             // cmbCuenta
             // 
+            this.cmbCuenta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cmbCuenta.FormattingEnabled = true;
             this.cmbCuenta.Location = new System.Drawing.Point(17, 47);
             this.cmbCuenta.Margin = new System.Windows.Forms.Padding(4);
@@ -147,6 +154,7 @@ namespace Contabilidad
             // 
             // label2
             // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 406);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -157,6 +165,7 @@ namespace Contabilidad
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(243, 406);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -167,6 +176,7 @@ namespace Contabilidad
             // 
             // txtSaldoDebito
             // 
+            this.txtSaldoDebito.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtSaldoDebito.Location = new System.Drawing.Point(103, 403);
             this.txtSaldoDebito.Margin = new System.Windows.Forms.Padding(4);
             this.txtSaldoDebito.Name = "txtSaldoDebito";
@@ -177,6 +187,7 @@ namespace Contabilidad
             // 
             // txtSaldoHaber
             // 
+            this.txtSaldoHaber.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtSaldoHaber.Location = new System.Drawing.Point(332, 403);
             this.txtSaldoHaber.Margin = new System.Windows.Forms.Padding(4);
             this.txtSaldoHaber.Name = "txtSaldoHaber";
@@ -187,6 +198,7 @@ namespace Contabilidad
             // 
             // dtpFechaAjuste
             // 
+            this.dtpFechaAjuste.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpFechaAjuste.Location = new System.Drawing.Point(559, 403);
             this.dtpFechaAjuste.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaAjuste.Name = "dtpFechaAjuste";
@@ -195,8 +207,9 @@ namespace Contabilidad
             // 
             // label3
             // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 22);
+            this.label3.Location = new System.Drawing.Point(14, 28);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 16);
@@ -205,6 +218,7 @@ namespace Contabilidad
             // 
             // label4
             // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(698, 28);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -215,8 +229,9 @@ namespace Contabilidad
             // 
             // label5
             // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(506, 406);
+            this.label5.Location = new System.Drawing.Point(503, 406);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 16);
@@ -244,6 +259,9 @@ namespace Contabilidad
             this.Controls.Add(this.txtGlosa);
             this.Controls.Add(this.dgvAjusteIndividual);
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1070, 488);
+            this.MinimumSize = new System.Drawing.Size(1070, 488);
             this.Name = "frmAgregarAjusteLibroDiario";
             this.Text = "frmAgregarAjusteLibroDiario";
             ((System.ComponentModel.ISupportInitialize)(this.dgvAjusteIndividual)).EndInit();

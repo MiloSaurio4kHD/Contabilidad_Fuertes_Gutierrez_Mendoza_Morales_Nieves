@@ -88,6 +88,42 @@ namespace Contabilidad.Data
             Guardar(ajustes);
         }
 
+        /// <summary>
+        /// True si algun ajuste guardado tiene un detalle que use esa cuenta (para
+        /// bloquear el borrado de cuentas en uso desde el catalogo).
+        /// </summary>
+        public bool TieneMovimientos(string codigoCuenta)
+        {
+            return ObtenerTodos().Any(a => a.Detalles.Any(d =>
+                string.Equals(d.CuentaCodigo, codigoCuenta, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        /// <summary>
+        /// Actualiza el codigo/nombre de una cuenta en todos los detalles de los ajustes
+        /// ya guardados que la referencien. Se usa cuando se edita una cuenta en el
+        /// catalogo, para que el Libro de Ajustes (y todo lo que se deriva de el) no
+        /// quede con el nombre o codigo viejo. Devuelve true si modifico algun ajuste.
+        /// </summary>
+        public bool ActualizarCuentaEnDetalles(string codigoOriginal, string codigoNuevo, string nombreNuevo)
+        {
+            var ajustes = ObtenerTodos();
+            bool huboCambios = false;
+            foreach (var ajuste in ajustes)
+            {
+                foreach (var detalle in ajuste.Detalles)
+                {
+                    if (string.Equals(detalle.CuentaCodigo, codigoOriginal, StringComparison.OrdinalIgnoreCase))
+                    {
+                        detalle.CuentaCodigo = codigoNuevo;
+                        detalle.CuentaNombre = nombreNuevo;
+                        huboCambios = true;
+                    }
+                }
+            }
+            if (huboCambios) Guardar(ajustes);
+            return huboCambios;
+        }
+
         private void Guardar(List<Ajuste> ajustes)
         {
             var lista = ajustes.Select(MapearADiccionario).ToList();

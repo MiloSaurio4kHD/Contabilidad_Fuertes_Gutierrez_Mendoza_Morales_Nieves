@@ -15,11 +15,25 @@ namespace Contabilidad.Data
         private readonly LibroDiarioRepository _libroDiarioRepository = new LibroDiarioRepository();
         private readonly AjusteRepository _ajusteRepository = new AjusteRepository();
 
+        /// <summary>Libro Mayor ajustado: combina Libro Diario y Libro de Ajustes.</summary>
         public List<CuentaMayor> ObtenerLibroMayor()
+        {
+            return Calcular(
+                _libroDiarioRepository.ObtenerTodos().Cast<IAsientoLibro>(),
+                _ajusteRepository.ObtenerTodos().Cast<IAsientoLibro>());
+        }
+
+        /// <summary>Libro Mayor sin ajustar: solo los movimientos del Libro Diario.</summary>
+        public List<CuentaMayor> ObtenerLibroMayorSinAjustar()
+        {
+            return Calcular(_libroDiarioRepository.ObtenerTodos().Cast<IAsientoLibro>());
+        }
+
+        private static List<CuentaMayor> Calcular(params IEnumerable<IAsientoLibro>[] gruposDeAsientos)
         {
             var porCodigo = new Dictionary<string, CuentaMayor>(StringComparer.OrdinalIgnoreCase);
 
-            void Procesar(IEnumerable<IAsientoLibro> asientos)
+            foreach (var asientos in gruposDeAsientos)
             {
                 foreach (var asiento in asientos)
                 {
@@ -43,9 +57,6 @@ namespace Contabilidad.Data
                     }
                 }
             }
-
-            Procesar(_libroDiarioRepository.ObtenerTodos().Cast<IAsientoLibro>());
-            Procesar(_ajusteRepository.ObtenerTodos().Cast<IAsientoLibro>());
 
             return porCodigo.Values.OrderBy(c => c.Codigo).ToList();
         }

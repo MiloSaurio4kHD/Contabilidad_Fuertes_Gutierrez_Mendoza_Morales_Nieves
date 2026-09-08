@@ -87,6 +87,42 @@ namespace Contabilidad.Data
             Guardar(asientos);
         }
 
+        /// <summary>
+        /// True si algun asiento guardado tiene un detalle que use esa cuenta (para
+        /// bloquear el borrado de cuentas en uso desde el catalogo).
+        /// </summary>
+        public bool TieneMovimientos(string codigoCuenta)
+        {
+            return ObtenerTodos().Any(a => a.Detalles.Any(d =>
+                string.Equals(d.CuentaCodigo, codigoCuenta, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        /// <summary>
+        /// Actualiza el codigo/nombre de una cuenta en todos los detalles de los asientos
+        /// ya guardados que la referencien. Se usa cuando se edita una cuenta en el
+        /// catalogo, para que el Libro Diario (y todo lo que se deriva de el) no quede
+        /// con el nombre o codigo viejo. Devuelve true si modifico algun asiento.
+        /// </summary>
+        public bool ActualizarCuentaEnDetalles(string codigoOriginal, string codigoNuevo, string nombreNuevo)
+        {
+            var asientos = ObtenerTodos();
+            bool huboCambios = false;
+            foreach (var asiento in asientos)
+            {
+                foreach (var detalle in asiento.Detalles)
+                {
+                    if (string.Equals(detalle.CuentaCodigo, codigoOriginal, StringComparison.OrdinalIgnoreCase))
+                    {
+                        detalle.CuentaCodigo = codigoNuevo;
+                        detalle.CuentaNombre = nombreNuevo;
+                        huboCambios = true;
+                    }
+                }
+            }
+            if (huboCambios) Guardar(asientos);
+            return huboCambios;
+        }
+
         private void Guardar(List<AsientoContable> asientos)
         {
             var lista = asientos.Select(MapearADiccionario).ToList();

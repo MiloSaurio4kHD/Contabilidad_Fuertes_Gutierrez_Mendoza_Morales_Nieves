@@ -6,7 +6,6 @@ C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Save.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\LibroDiario.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\LibroAjustes.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\libroMayor.ico
-C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\BalanceComprobacion.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Balance.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\BalanceGeneral.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Settings.ico
@@ -25,3 +24,7 @@ C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.exe
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\obj\Debug\Contabilidad.pdb
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Excel.ico
 C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Upload.ico
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\EstadoResultado.ico
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\Dashboard.ico
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\LibroMayorSinAjustes.ico
+C:\Users\dfuer\source\repos\Contabilidad\Contabilidad\bin\Debug\Icons\BalanceComprobacionSinAjustar.ico

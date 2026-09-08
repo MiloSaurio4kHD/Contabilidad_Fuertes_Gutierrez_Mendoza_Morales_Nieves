@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web.Script.Serialization;
 using Contabilidad.Models;
 
 namespace Contabilidad.Data
@@ -11,6 +12,15 @@ namespace Contabilidad.Data
         private static readonly string CarpetaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
         private static readonly string RutaCatalogoSemilla = Path.Combine(CarpetaDatos, "cuentas_catalogo.json");
         private static readonly string RutaCuentas = Path.Combine(CarpetaDatos, "cuentas.json");
+
+        /// <summary>
+        /// Codigos del catalogo semilla que el usuario ya edito (les cambio el codigo).
+        /// Se guardan aqui para que AsegurarArchivoInicial() no los vuelva a insertar como
+        /// si fueran cuentas nuevas: sin esto, editar el codigo de una cuenta del catalogo
+        /// original liberaba su codigo viejo, y en la siguiente lectura la reconciliacion
+        /// con el catalogo semilla la volvia a crear (quedaba "duplicada").
+        /// </summary>
+        private static readonly string RutaCodigosRenombrados = Path.Combine(CarpetaDatos, "cuentas_catalogo_renombrados.json");
 
         /// <summary>
         /// Devuelve el JSON de cuentas tal cual esta guardado, para poder empaquetarlo
@@ -62,13 +72,40 @@ namespace Contabilidad.Data
             if (existente == null)
                 throw new InvalidOperationException("La cuenta que intenta editar ya no existe.");
 
-            if (!string.Equals(codigoOriginal, cuenta.Codigo, StringComparison.OrdinalIgnoreCase) &&
-                cuentas.Any(c => string.Equals(c.Codigo, cuenta.Codigo, StringComparison.OrdinalIgnoreCase)))
+            bool cambioCodigo = !string.Equals(codigoOriginal, cuenta.Codigo, StringComparison.OrdinalIgnoreCase);
+            if (cambioCodigo && cuentas.Any(c => string.Equals(c.Codigo, cuenta.Codigo, StringComparison.OrdinalIgnoreCase)))
                 throw new InvalidOperationException(string.Format("Ya existe una cuenta con el codigo '{0}'.", cuenta.Codigo));
 
             cuentas.Remove(existente);
             cuentas.Add(cuenta);
             Guardar(cuentas);
+
+            // Si se le cambio el codigo a una cuenta del catalogo original, hay que
+            // recordar que ese codigo viejo ya fue "usado" para renombrar, y no dejar
+            // que la reconciliacion con el catalogo semilla lo vuelva a crear.
+            if (cambioCodigo && EsDelCatalogoOriginal(codigoOriginal))
+            {
+                MarcarCodigoOriginalComoRenombrado(codigoOriginal);
+            }
+        }
+
+        /// <summary>
+        /// True si el codigo pertenece al catalogo semilla original (Data\cuentas_catalogo.json),
+        /// para no dejar eliminar esas cuentas desde la app.
+        /// </summary>
+        public bool EsDelCatalogoOriginal(string codigo)
+        {
+            if (!File.Exists(RutaCatalogoSemilla)) return false;
+
+            var semilla = JsonHelper.ParseArray(File.ReadAllText(RutaCatalogoSemilla));
+            foreach (Dictionary<string, object> item in semilla)
+            {
+                if (string.Equals(JsonHelper.ObtenerTexto(item, "codigo"), codigo, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Eliminar(string codigo)
@@ -113,12 +150,14 @@ namespace Contabilidad.Data
                 codigosExistentes.Add(JsonHelper.ObtenerTexto(item, "codigo"));
             }
 
+            var codigosRenombrados = ObtenerCodigosRenombrados();
             var semilla = JsonHelper.ParseArray(File.ReadAllText(RutaCatalogoSemilla));
             bool faltaAlguna = false;
             foreach (Dictionary<string, object> item in semilla)
             {
                 var codigo = JsonHelper.ObtenerTexto(item, "codigo");
                 if (codigosExistentes.Contains(codigo)) continue;
+                if (codigosRenombrados.Contains(codigo)) continue;
                 cuentas.Add(item);
                 faltaAlguna = true;
             }
@@ -127,6 +166,30 @@ namespace Contabilidad.Data
             {
                 File.WriteAllText(RutaCuentas, JsonHelper.ToJson(cuentas));
             }
+        }
+
+        private static HashSet<string> ObtenerCodigosRenombrados()
+        {
+            var resultado = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (!File.Exists(RutaCodigosRenombrados)) return resultado;
+
+            var texto = File.ReadAllText(RutaCodigosRenombrados);
+            if (string.IsNullOrWhiteSpace(texto)) return resultado;
+
+            var serializer = new JavaScriptSerializer();
+            var arreglo = serializer.Deserialize<string[]>(texto);
+            foreach (var codigo in arreglo) resultado.Add(codigo);
+            return resultado;
+        }
+
+        private static void MarcarCodigoOriginalComoRenombrado(string codigo)
+        {
+            var codigos = ObtenerCodigosRenombrados();
+            if (!codigos.Add(codigo)) return;
+
+            Directory.CreateDirectory(CarpetaDatos);
+            var serializer = new JavaScriptSerializer();
+            File.WriteAllText(RutaCodigosRenombrados, serializer.Serialize(codigos.ToList()));
         }
 
         private static Cuenta MapearDesdeDiccionario(Dictionary<string, object> item)
