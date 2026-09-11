@@ -99,8 +99,11 @@
     <Compile Include="Data\EvolucionMensualService.cs" />
     <Compile Include="Data\ExcelWriter.cs" />
     <Compile Include="Data\ExportacionExcelService.cs" />
+    <Compile Include="Data\PdfWriter.cs" />
+    <Compile Include="Data\ExportacionPdfService.cs" />
     <Compile Include="UI\GridStyleHelper.cs" />
     <Compile Include="UI\IconHelper.cs" />
+    <Compile Include="UI\BotonConIconoColumn.cs" />
     <Compile Include="UI\FilaReporteBuilder.cs" />
     <Compile Include="UI\FilaLibroDiario.cs" />
     <Compile Include="UI\LibroContableDataGridViewBase.cs">
@@ -222,6 +225,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\BalanceComprobacionSinAjustar.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\ExportPdf.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\edit16px.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\Quitar16px.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

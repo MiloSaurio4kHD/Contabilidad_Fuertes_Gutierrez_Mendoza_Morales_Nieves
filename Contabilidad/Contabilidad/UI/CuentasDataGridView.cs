@@ -21,7 +21,7 @@ namespace Contabilidad.UI
         private void ConfigurarColumnas()
         {
             Columns.Clear();
-            Columns.Add("colCodigo", "Codigo");
+            Columns.Add("colCodigo", "Código");
             Columns.Add("colNombre", "Nombre");
             Columns.Add("colTipo", "Tipo");
             Columns.Add("colNaturaleza", "Naturaleza");

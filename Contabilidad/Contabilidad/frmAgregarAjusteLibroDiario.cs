@@ -121,22 +121,24 @@ namespace Contabilidad
                 DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleRight },
                 SortMode = DataGridViewColumnSortMode.NotSortable
             });
-            dgvAjusteIndividual.Columns.Add(new DataGridViewButtonColumn
+            dgvAjusteIndividual.Columns.Add(new UI.BotonConIconoColumn
             {
                 Name = "colEditar",
                 HeaderText = string.Empty,
-                Text = "Editar",
-                UseColumnTextForButtonValue = true,
-                FillWeight = 9,
+                Texto = "Editar",
+                Icono = UI.IconHelper.ObtenerBitmap("edit16px.ico", 16),
+                ReadOnly = true,
+                FillWeight = 13,
                 SortMode = DataGridViewColumnSortMode.NotSortable
             });
-            dgvAjusteIndividual.Columns.Add(new DataGridViewButtonColumn
+            dgvAjusteIndividual.Columns.Add(new UI.BotonConIconoColumn
             {
                 Name = "colQuitar",
                 HeaderText = string.Empty,
-                Text = "Quitar",
-                UseColumnTextForButtonValue = true,
-                FillWeight = 9,
+                Texto = "Quitar",
+                Icono = UI.IconHelper.ObtenerBitmap("Quitar16px.ico", 16),
+                ReadOnly = true,
+                FillWeight = 13,
                 SortMode = DataGridViewColumnSortMode.NotSortable
             });
         }

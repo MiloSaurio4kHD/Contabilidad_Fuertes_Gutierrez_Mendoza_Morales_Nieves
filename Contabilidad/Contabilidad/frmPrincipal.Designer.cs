@@ -40,6 +40,8 @@ namespace Contabilidad
             this.btnEditarAsiento = new System.Windows.Forms.Button();
             this.btnAgregarAsiento = new System.Windows.Forms.Button();
             this.dgvLibroDiario = new Contabilidad.UI.LibroDiarioDataGridView();
+            this.tbpLibroMayorSinAjustar = new System.Windows.Forms.TabPage();
+            this.tbpBalanceComprobacionSinAjustar = new System.Windows.Forms.TabPage();
             this.tbpLibroAjustado = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,10 +51,8 @@ namespace Contabilidad
             this.btnEditarAjuste = new System.Windows.Forms.Button();
             this.btnAgregarAjuste = new System.Windows.Forms.Button();
             this.dgvLibroAjustes = new Contabilidad.UI.LibroAjustesDataGridView();
-            this.tbpLibroMayorSinAjustar = new System.Windows.Forms.TabPage();
             this.tbpLibroMayor = new System.Windows.Forms.TabPage();
             this.pnlLibroMayor = new System.Windows.Forms.Panel();
-            this.tbpBalanceComprobacionSinAjustar = new System.Windows.Forms.TabPage();
             this.tbpBalanceComprobacion = new System.Windows.Forms.TabPage();
             this.dgvBalanceComprobacion = new Contabilidad.UI.BalanceComprobacionDataGridView();
             this.tbpEstadoResultado = new System.Windows.Forms.TabPage();
@@ -86,28 +86,26 @@ namespace Contabilidad
             // 
             this.tabControl1.Controls.Add(this.tbpDashBoard);
             this.tabControl1.Controls.Add(this.tbpLibroDiario);
-            this.tabControl1.Controls.Add(this.tbpLibroAjustado);
             this.tabControl1.Controls.Add(this.tbpLibroMayorSinAjustar);
-            this.tabControl1.Controls.Add(this.tbpLibroMayor);
             this.tabControl1.Controls.Add(this.tbpBalanceComprobacionSinAjustar);
+            this.tabControl1.Controls.Add(this.tbpLibroAjustado);
+            this.tabControl1.Controls.Add(this.tbpLibroMayor);
             this.tabControl1.Controls.Add(this.tbpBalanceComprobacion);
             this.tabControl1.Controls.Add(this.tbpEstadoResultado);
             this.tabControl1.Controls.Add(this.tbpBalanceGeneral);
             this.tabControl1.Controls.Add(this.tblConfiguración);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1924, 814);
+            this.tabControl1.Size = new System.Drawing.Size(1784, 861);
             this.tabControl1.TabIndex = 0;
             // 
             // tbpDashBoard
             // 
-            this.tbpDashBoard.Location = new System.Drawing.Point(4, 25);
-            this.tbpDashBoard.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpDashBoard.Location = new System.Drawing.Point(4, 22);
             this.tbpDashBoard.Name = "tbpDashBoard";
-            this.tbpDashBoard.Size = new System.Drawing.Size(1916, 785);
+            this.tbpDashBoard.Size = new System.Drawing.Size(1776, 835);
             this.tbpDashBoard.TabIndex = 9;
             this.tbpDashBoard.Text = "DashBoard";
             this.tbpDashBoard.UseVisualStyleBackColor = true;
@@ -122,11 +120,10 @@ namespace Contabilidad
             this.tbpLibroDiario.Controls.Add(this.btnEditarAsiento);
             this.tbpLibroDiario.Controls.Add(this.btnAgregarAsiento);
             this.tbpLibroDiario.Controls.Add(this.dgvLibroDiario);
-            this.tbpLibroDiario.Location = new System.Drawing.Point(4, 25);
-            this.tbpLibroDiario.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpLibroDiario.Location = new System.Drawing.Point(4, 22);
             this.tbpLibroDiario.Name = "tbpLibroDiario";
-            this.tbpLibroDiario.Padding = new System.Windows.Forms.Padding(4);
-            this.tbpLibroDiario.Size = new System.Drawing.Size(1916, 785);
+            this.tbpLibroDiario.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpLibroDiario.Size = new System.Drawing.Size(1776, 835);
             this.tbpLibroDiario.TabIndex = 0;
             this.tbpLibroDiario.Text = "Libro diario";
             this.tbpLibroDiario.UseVisualStyleBackColor = true;
@@ -136,10 +133,9 @@ namespace Contabilidad
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1535, 202);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(1151, 164);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 16);
+            this.label2.Size = new System.Drawing.Size(61, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Saldo debe";
             this.label2.Visible = false;
@@ -148,10 +144,9 @@ namespace Contabilidad
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1532, 204);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(1149, 166);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 16);
+            this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Saldo haber";
             this.label1.Visible = false;
@@ -159,11 +154,10 @@ namespace Contabilidad
             // txtSaldoDebito
             // 
             this.txtSaldoDebito.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSaldoDebito.Location = new System.Drawing.Point(1539, 200);
-            this.txtSaldoDebito.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaldoDebito.Location = new System.Drawing.Point(1154, 162);
             this.txtSaldoDebito.Name = "txtSaldoDebito";
             this.txtSaldoDebito.ReadOnly = true;
-            this.txtSaldoDebito.Size = new System.Drawing.Size(136, 22);
+            this.txtSaldoDebito.Size = new System.Drawing.Size(103, 20);
             this.txtSaldoDebito.TabIndex = 5;
             this.txtSaldoDebito.TabStop = false;
             this.txtSaldoDebito.Visible = false;
@@ -172,11 +166,10 @@ namespace Contabilidad
             // txtSaldoHaber
             // 
             this.txtSaldoHaber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSaldoHaber.Location = new System.Drawing.Point(1539, 200);
-            this.txtSaldoHaber.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaldoHaber.Location = new System.Drawing.Point(1154, 162);
             this.txtSaldoHaber.Name = "txtSaldoHaber";
             this.txtSaldoHaber.ReadOnly = true;
-            this.txtSaldoHaber.Size = new System.Drawing.Size(136, 22);
+            this.txtSaldoHaber.Size = new System.Drawing.Size(103, 20);
             this.txtSaldoHaber.TabIndex = 4;
             this.txtSaldoHaber.TabStop = false;
             this.txtSaldoHaber.Visible = false;
@@ -185,10 +178,9 @@ namespace Contabilidad
             // btnEliminarAsiento
             // 
             this.btnEliminarAsiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEliminarAsiento.Location = new System.Drawing.Point(1583, 149);
-            this.btnEliminarAsiento.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEliminarAsiento.Location = new System.Drawing.Point(1187, 121);
             this.btnEliminarAsiento.Name = "btnEliminarAsiento";
-            this.btnEliminarAsiento.Size = new System.Drawing.Size(236, 42);
+            this.btnEliminarAsiento.Size = new System.Drawing.Size(177, 34);
             this.btnEliminarAsiento.TabIndex = 3;
             this.btnEliminarAsiento.Text = "Eliminar asiento";
             this.btnEliminarAsiento.UseVisualStyleBackColor = true;
@@ -197,10 +189,9 @@ namespace Contabilidad
             // btnEditarAsiento
             // 
             this.btnEditarAsiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditarAsiento.Location = new System.Drawing.Point(1583, 100);
-            this.btnEditarAsiento.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditarAsiento.Location = new System.Drawing.Point(1187, 81);
             this.btnEditarAsiento.Name = "btnEditarAsiento";
-            this.btnEditarAsiento.Size = new System.Drawing.Size(236, 42);
+            this.btnEditarAsiento.Size = new System.Drawing.Size(177, 34);
             this.btnEditarAsiento.TabIndex = 2;
             this.btnEditarAsiento.Text = "Editar asiento";
             this.btnEditarAsiento.UseVisualStyleBackColor = true;
@@ -209,10 +200,9 @@ namespace Contabilidad
             // btnAgregarAsiento
             // 
             this.btnAgregarAsiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAgregarAsiento.Location = new System.Drawing.Point(1583, 51);
-            this.btnAgregarAsiento.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAgregarAsiento.Location = new System.Drawing.Point(1187, 41);
             this.btnAgregarAsiento.Name = "btnAgregarAsiento";
-            this.btnAgregarAsiento.Size = new System.Drawing.Size(236, 42);
+            this.btnAgregarAsiento.Size = new System.Drawing.Size(177, 34);
             this.btnAgregarAsiento.TabIndex = 1;
             this.btnAgregarAsiento.Text = "Crear nuevo asiento";
             this.btnAgregarAsiento.UseVisualStyleBackColor = true;
@@ -224,13 +214,30 @@ namespace Contabilidad
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLibroDiario.ColumnHeadersHeight = 29;
-            this.dgvLibroDiario.Location = new System.Drawing.Point(11, 7);
-            this.dgvLibroDiario.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvLibroDiario.Location = new System.Drawing.Point(8, 6);
             this.dgvLibroDiario.Name = "dgvLibroDiario";
             this.dgvLibroDiario.RowHeadersWidth = 51;
-            this.dgvLibroDiario.Size = new System.Drawing.Size(1463, 711);
+            this.dgvLibroDiario.Size = new System.Drawing.Size(1097, 821);
             this.dgvLibroDiario.TabIndex = 0;
             this.dgvLibroDiario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLibroDiario_CellContentClick);
+            // 
+            // tbpLibroMayorSinAjustar
+            // 
+            this.tbpLibroMayorSinAjustar.Location = new System.Drawing.Point(4, 22);
+            this.tbpLibroMayorSinAjustar.Name = "tbpLibroMayorSinAjustar";
+            this.tbpLibroMayorSinAjustar.Size = new System.Drawing.Size(1776, 835);
+            this.tbpLibroMayorSinAjustar.TabIndex = 7;
+            this.tbpLibroMayorSinAjustar.Text = "Libro mayor";
+            this.tbpLibroMayorSinAjustar.UseVisualStyleBackColor = true;
+            // 
+            // tbpBalanceComprobacionSinAjustar
+            // 
+            this.tbpBalanceComprobacionSinAjustar.Location = new System.Drawing.Point(4, 22);
+            this.tbpBalanceComprobacionSinAjustar.Name = "tbpBalanceComprobacionSinAjustar";
+            this.tbpBalanceComprobacionSinAjustar.Size = new System.Drawing.Size(1776, 835);
+            this.tbpBalanceComprobacionSinAjustar.TabIndex = 8;
+            this.tbpBalanceComprobacionSinAjustar.Text = "Balance comprobación";
+            this.tbpBalanceComprobacionSinAjustar.UseVisualStyleBackColor = true;
             // 
             // tbpLibroAjustado
             // 
@@ -242,11 +249,10 @@ namespace Contabilidad
             this.tbpLibroAjustado.Controls.Add(this.btnEditarAjuste);
             this.tbpLibroAjustado.Controls.Add(this.btnAgregarAjuste);
             this.tbpLibroAjustado.Controls.Add(this.dgvLibroAjustes);
-            this.tbpLibroAjustado.Location = new System.Drawing.Point(4, 25);
-            this.tbpLibroAjustado.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpLibroAjustado.Location = new System.Drawing.Point(4, 22);
             this.tbpLibroAjustado.Name = "tbpLibroAjustado";
-            this.tbpLibroAjustado.Padding = new System.Windows.Forms.Padding(4);
-            this.tbpLibroAjustado.Size = new System.Drawing.Size(1916, 785);
+            this.tbpLibroAjustado.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpLibroAjustado.Size = new System.Drawing.Size(1776, 835);
             this.tbpLibroAjustado.TabIndex = 1;
             this.tbpLibroAjustado.Text = "Libro ajustes";
             this.tbpLibroAjustado.UseVisualStyleBackColor = true;
@@ -256,10 +262,9 @@ namespace Contabilidad
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1539, 201);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(1154, 163);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(78, 16);
+            this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Saldo debe";
             this.label6.Visible = false;
@@ -268,10 +273,9 @@ namespace Contabilidad
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1539, 201);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(1154, 163);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 16);
+            this.label5.Size = new System.Drawing.Size(64, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Saldo haber";
             this.label5.Visible = false;
@@ -279,11 +283,10 @@ namespace Contabilidad
             // txtSaldoDebitoAjuste
             // 
             this.txtSaldoDebitoAjuste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSaldoDebitoAjuste.Location = new System.Drawing.Point(1539, 201);
-            this.txtSaldoDebitoAjuste.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaldoDebitoAjuste.Location = new System.Drawing.Point(1154, 163);
             this.txtSaldoDebitoAjuste.Name = "txtSaldoDebitoAjuste";
             this.txtSaldoDebitoAjuste.ReadOnly = true;
-            this.txtSaldoDebitoAjuste.Size = new System.Drawing.Size(132, 22);
+            this.txtSaldoDebitoAjuste.Size = new System.Drawing.Size(100, 20);
             this.txtSaldoDebitoAjuste.TabIndex = 13;
             this.txtSaldoDebitoAjuste.TabStop = false;
             this.txtSaldoDebitoAjuste.Visible = false;
@@ -291,11 +294,10 @@ namespace Contabilidad
             // txtSaldoHaberAjuste
             // 
             this.txtSaldoHaberAjuste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSaldoHaberAjuste.Location = new System.Drawing.Point(1539, 201);
-            this.txtSaldoHaberAjuste.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaldoHaberAjuste.Location = new System.Drawing.Point(1154, 163);
             this.txtSaldoHaberAjuste.Name = "txtSaldoHaberAjuste";
             this.txtSaldoHaberAjuste.ReadOnly = true;
-            this.txtSaldoHaberAjuste.Size = new System.Drawing.Size(132, 22);
+            this.txtSaldoHaberAjuste.Size = new System.Drawing.Size(100, 20);
             this.txtSaldoHaberAjuste.TabIndex = 12;
             this.txtSaldoHaberAjuste.TabStop = false;
             this.txtSaldoHaberAjuste.Visible = false;
@@ -303,10 +305,9 @@ namespace Contabilidad
             // btnEliminarAjuste
             // 
             this.btnEliminarAjuste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEliminarAjuste.Location = new System.Drawing.Point(1583, 150);
-            this.btnEliminarAjuste.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEliminarAjuste.Location = new System.Drawing.Point(1187, 122);
             this.btnEliminarAjuste.Name = "btnEliminarAjuste";
-            this.btnEliminarAjuste.Size = new System.Drawing.Size(232, 42);
+            this.btnEliminarAjuste.Size = new System.Drawing.Size(174, 34);
             this.btnEliminarAjuste.TabIndex = 11;
             this.btnEliminarAjuste.Text = "Eliminar ajuste";
             this.btnEliminarAjuste.UseVisualStyleBackColor = true;
@@ -315,10 +316,9 @@ namespace Contabilidad
             // btnEditarAjuste
             // 
             this.btnEditarAjuste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditarAjuste.Location = new System.Drawing.Point(1583, 101);
-            this.btnEditarAjuste.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditarAjuste.Location = new System.Drawing.Point(1187, 82);
             this.btnEditarAjuste.Name = "btnEditarAjuste";
-            this.btnEditarAjuste.Size = new System.Drawing.Size(232, 42);
+            this.btnEditarAjuste.Size = new System.Drawing.Size(174, 34);
             this.btnEditarAjuste.TabIndex = 10;
             this.btnEditarAjuste.Text = "Editar ajuste";
             this.btnEditarAjuste.UseVisualStyleBackColor = true;
@@ -327,10 +327,9 @@ namespace Contabilidad
             // btnAgregarAjuste
             // 
             this.btnAgregarAjuste.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAgregarAjuste.Location = new System.Drawing.Point(1583, 51);
-            this.btnAgregarAjuste.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAgregarAjuste.Location = new System.Drawing.Point(1187, 41);
             this.btnAgregarAjuste.Name = "btnAgregarAjuste";
-            this.btnAgregarAjuste.Size = new System.Drawing.Size(232, 42);
+            this.btnAgregarAjuste.Size = new System.Drawing.Size(174, 34);
             this.btnAgregarAjuste.TabIndex = 9;
             this.btnAgregarAjuste.Text = "Crear nuevo ajuste";
             this.btnAgregarAjuste.UseVisualStyleBackColor = true;
@@ -342,30 +341,18 @@ namespace Contabilidad
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLibroAjustes.ColumnHeadersHeight = 29;
-            this.dgvLibroAjustes.Location = new System.Drawing.Point(11, 7);
-            this.dgvLibroAjustes.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvLibroAjustes.Location = new System.Drawing.Point(8, 6);
             this.dgvLibroAjustes.Name = "dgvLibroAjustes";
             this.dgvLibroAjustes.RowHeadersWidth = 51;
-            this.dgvLibroAjustes.Size = new System.Drawing.Size(1463, 711);
+            this.dgvLibroAjustes.Size = new System.Drawing.Size(1097, 821);
             this.dgvLibroAjustes.TabIndex = 8;
-            // 
-            // tbpLibroMayorSinAjustar
-            // 
-            this.tbpLibroMayorSinAjustar.Location = new System.Drawing.Point(4, 25);
-            this.tbpLibroMayorSinAjustar.Margin = new System.Windows.Forms.Padding(4);
-            this.tbpLibroMayorSinAjustar.Name = "tbpLibroMayorSinAjustar";
-            this.tbpLibroMayorSinAjustar.Size = new System.Drawing.Size(1916, 785);
-            this.tbpLibroMayorSinAjustar.TabIndex = 7;
-            this.tbpLibroMayorSinAjustar.Text = "Libro mayor";
-            this.tbpLibroMayorSinAjustar.UseVisualStyleBackColor = true;
             // 
             // tbpLibroMayor
             // 
             this.tbpLibroMayor.Controls.Add(this.pnlLibroMayor);
-            this.tbpLibroMayor.Location = new System.Drawing.Point(4, 25);
-            this.tbpLibroMayor.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpLibroMayor.Location = new System.Drawing.Point(4, 22);
             this.tbpLibroMayor.Name = "tbpLibroMayor";
-            this.tbpLibroMayor.Size = new System.Drawing.Size(1916, 785);
+            this.tbpLibroMayor.Size = new System.Drawing.Size(1776, 835);
             this.tbpLibroMayor.TabIndex = 2;
             this.tbpLibroMayor.Text = "Libro mayor ajustado";
             this.tbpLibroMayor.UseVisualStyleBackColor = true;
@@ -376,28 +363,16 @@ namespace Contabilidad
             this.pnlLibroMayor.BackColor = System.Drawing.Color.White;
             this.pnlLibroMayor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLibroMayor.Location = new System.Drawing.Point(0, 0);
-            this.pnlLibroMayor.Margin = new System.Windows.Forms.Padding(4);
             this.pnlLibroMayor.Name = "pnlLibroMayor";
-            this.pnlLibroMayor.Size = new System.Drawing.Size(1916, 785);
+            this.pnlLibroMayor.Size = new System.Drawing.Size(1776, 835);
             this.pnlLibroMayor.TabIndex = 0;
-            // 
-            // tbpBalanceComprobacionSinAjustar
-            // 
-            this.tbpBalanceComprobacionSinAjustar.Location = new System.Drawing.Point(4, 25);
-            this.tbpBalanceComprobacionSinAjustar.Margin = new System.Windows.Forms.Padding(4);
-            this.tbpBalanceComprobacionSinAjustar.Name = "tbpBalanceComprobacionSinAjustar";
-            this.tbpBalanceComprobacionSinAjustar.Size = new System.Drawing.Size(1916, 785);
-            this.tbpBalanceComprobacionSinAjustar.TabIndex = 8;
-            this.tbpBalanceComprobacionSinAjustar.Text = "Balance comprobación";
-            this.tbpBalanceComprobacionSinAjustar.UseVisualStyleBackColor = true;
             // 
             // tbpBalanceComprobacion
             // 
             this.tbpBalanceComprobacion.Controls.Add(this.dgvBalanceComprobacion);
-            this.tbpBalanceComprobacion.Location = new System.Drawing.Point(4, 25);
-            this.tbpBalanceComprobacion.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpBalanceComprobacion.Location = new System.Drawing.Point(4, 22);
             this.tbpBalanceComprobacion.Name = "tbpBalanceComprobacion";
-            this.tbpBalanceComprobacion.Size = new System.Drawing.Size(1916, 785);
+            this.tbpBalanceComprobacion.Size = new System.Drawing.Size(1776, 835);
             this.tbpBalanceComprobacion.TabIndex = 3;
             this.tbpBalanceComprobacion.Text = "Balance comprobación ajustado";
             this.tbpBalanceComprobacion.UseVisualStyleBackColor = true;
@@ -407,19 +382,17 @@ namespace Contabilidad
             this.dgvBalanceComprobacion.ColumnHeadersHeight = 29;
             this.dgvBalanceComprobacion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBalanceComprobacion.Location = new System.Drawing.Point(0, 0);
-            this.dgvBalanceComprobacion.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBalanceComprobacion.Name = "dgvBalanceComprobacion";
             this.dgvBalanceComprobacion.RowHeadersWidth = 51;
-            this.dgvBalanceComprobacion.Size = new System.Drawing.Size(1916, 785);
+            this.dgvBalanceComprobacion.Size = new System.Drawing.Size(1776, 835);
             this.dgvBalanceComprobacion.TabIndex = 0;
             // 
             // tbpEstadoResultado
             // 
             this.tbpEstadoResultado.Controls.Add(this.dgvEstadoResultado);
-            this.tbpEstadoResultado.Location = new System.Drawing.Point(4, 25);
-            this.tbpEstadoResultado.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpEstadoResultado.Location = new System.Drawing.Point(4, 22);
             this.tbpEstadoResultado.Name = "tbpEstadoResultado";
-            this.tbpEstadoResultado.Size = new System.Drawing.Size(1916, 785);
+            this.tbpEstadoResultado.Size = new System.Drawing.Size(1776, 835);
             this.tbpEstadoResultado.TabIndex = 4;
             this.tbpEstadoResultado.Text = "Estado resultado";
             this.tbpEstadoResultado.UseVisualStyleBackColor = true;
@@ -429,19 +402,17 @@ namespace Contabilidad
             this.dgvEstadoResultado.ColumnHeadersHeight = 29;
             this.dgvEstadoResultado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEstadoResultado.Location = new System.Drawing.Point(0, 0);
-            this.dgvEstadoResultado.Margin = new System.Windows.Forms.Padding(4);
             this.dgvEstadoResultado.Name = "dgvEstadoResultado";
             this.dgvEstadoResultado.RowHeadersWidth = 51;
-            this.dgvEstadoResultado.Size = new System.Drawing.Size(1916, 785);
+            this.dgvEstadoResultado.Size = new System.Drawing.Size(1776, 835);
             this.dgvEstadoResultado.TabIndex = 0;
             // 
             // tbpBalanceGeneral
             // 
             this.tbpBalanceGeneral.Controls.Add(this.dgvBalanceGeneral);
-            this.tbpBalanceGeneral.Location = new System.Drawing.Point(4, 25);
-            this.tbpBalanceGeneral.Margin = new System.Windows.Forms.Padding(4);
+            this.tbpBalanceGeneral.Location = new System.Drawing.Point(4, 22);
             this.tbpBalanceGeneral.Name = "tbpBalanceGeneral";
-            this.tbpBalanceGeneral.Size = new System.Drawing.Size(1916, 785);
+            this.tbpBalanceGeneral.Size = new System.Drawing.Size(1776, 835);
             this.tbpBalanceGeneral.TabIndex = 5;
             this.tbpBalanceGeneral.Text = "Balance general";
             this.tbpBalanceGeneral.UseVisualStyleBackColor = true;
@@ -451,10 +422,9 @@ namespace Contabilidad
             this.dgvBalanceGeneral.ColumnHeadersHeight = 29;
             this.dgvBalanceGeneral.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBalanceGeneral.Location = new System.Drawing.Point(0, 0);
-            this.dgvBalanceGeneral.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBalanceGeneral.Name = "dgvBalanceGeneral";
             this.dgvBalanceGeneral.RowHeadersWidth = 51;
-            this.dgvBalanceGeneral.Size = new System.Drawing.Size(1916, 785);
+            this.dgvBalanceGeneral.Size = new System.Drawing.Size(1776, 835);
             this.dgvBalanceGeneral.TabIndex = 0;
             // 
             // tblConfiguración
@@ -463,10 +433,9 @@ namespace Contabilidad
             this.tblConfiguración.Controls.Add(this.btnEditarCuenta);
             this.tblConfiguración.Controls.Add(this.btnCrearCuenta);
             this.tblConfiguración.Controls.Add(this.dgvCuentas);
-            this.tblConfiguración.Location = new System.Drawing.Point(4, 25);
-            this.tblConfiguración.Margin = new System.Windows.Forms.Padding(4);
+            this.tblConfiguración.Location = new System.Drawing.Point(4, 22);
             this.tblConfiguración.Name = "tblConfiguración";
-            this.tblConfiguración.Size = new System.Drawing.Size(1916, 785);
+            this.tblConfiguración.Size = new System.Drawing.Size(1776, 835);
             this.tblConfiguración.TabIndex = 6;
             this.tblConfiguración.Text = "Configuración";
             this.tblConfiguración.UseVisualStyleBackColor = true;
@@ -474,10 +443,9 @@ namespace Contabilidad
             // btnEliminarCuenta
             // 
             this.btnEliminarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEliminarCuenta.Location = new System.Drawing.Point(1583, 150);
-            this.btnEliminarCuenta.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEliminarCuenta.Location = new System.Drawing.Point(1187, 122);
             this.btnEliminarCuenta.Name = "btnEliminarCuenta";
-            this.btnEliminarCuenta.Size = new System.Drawing.Size(232, 42);
+            this.btnEliminarCuenta.Size = new System.Drawing.Size(174, 34);
             this.btnEliminarCuenta.TabIndex = 7;
             this.btnEliminarCuenta.Text = "Eliminar cuenta";
             this.btnEliminarCuenta.UseVisualStyleBackColor = true;
@@ -486,10 +454,9 @@ namespace Contabilidad
             // btnEditarCuenta
             // 
             this.btnEditarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditarCuenta.Location = new System.Drawing.Point(1583, 101);
-            this.btnEditarCuenta.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditarCuenta.Location = new System.Drawing.Point(1187, 82);
             this.btnEditarCuenta.Name = "btnEditarCuenta";
-            this.btnEditarCuenta.Size = new System.Drawing.Size(232, 42);
+            this.btnEditarCuenta.Size = new System.Drawing.Size(174, 34);
             this.btnEditarCuenta.TabIndex = 6;
             this.btnEditarCuenta.Text = "Editar cuenta";
             this.btnEditarCuenta.UseVisualStyleBackColor = true;
@@ -498,10 +465,9 @@ namespace Contabilidad
             // btnCrearCuenta
             // 
             this.btnCrearCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCrearCuenta.Location = new System.Drawing.Point(1583, 51);
-            this.btnCrearCuenta.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCrearCuenta.Location = new System.Drawing.Point(1187, 41);
             this.btnCrearCuenta.Name = "btnCrearCuenta";
-            this.btnCrearCuenta.Size = new System.Drawing.Size(232, 42);
+            this.btnCrearCuenta.Size = new System.Drawing.Size(174, 34);
             this.btnCrearCuenta.TabIndex = 5;
             this.btnCrearCuenta.Text = "Crear nueva cuenta";
             this.btnCrearCuenta.UseVisualStyleBackColor = true;
@@ -513,24 +479,22 @@ namespace Contabilidad
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCuentas.ColumnHeadersHeight = 29;
-            this.dgvCuentas.Location = new System.Drawing.Point(11, 7);
-            this.dgvCuentas.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvCuentas.Location = new System.Drawing.Point(8, 6);
             this.dgvCuentas.Name = "dgvCuentas";
             this.dgvCuentas.RowHeadersWidth = 51;
-            this.dgvCuentas.Size = new System.Drawing.Size(1463, 711);
+            this.dgvCuentas.Size = new System.Drawing.Size(1097, 821);
             this.dgvCuentas.TabIndex = 4;
             // 
             // frmPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 814);
+            this.ClientSize = new System.Drawing.Size(1784, 861);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(1918, 851);
+            this.MinimumSize = new System.Drawing.Size(1800, 900);
             this.Name = "frmPrincipal";
-            this.Text = "Contabilidad";
+            this.Text = "Contabix";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.tabControl1.ResumeLayout(false);

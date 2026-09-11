@@ -2,6 +2,7 @@ using Contabilidad.Data;
 using Contabilidad.Models;
 using Contabilidad.UI;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Contabilidad
         private readonly BalanceGeneralService _balanceGeneralService = new BalanceGeneralService();
         private readonly EstadoService _estadoService = new EstadoService();
         private readonly ExportacionExcelService _exportacionExcelService = new ExportacionExcelService();
+        private readonly ExportacionPdfService _exportacionPdfService = new ExportacionPdfService();
         private System.Collections.Generic.List<CuentaMayor> _ultimoLibroMayor = new System.Collections.Generic.List<CuentaMayor>();
         private System.Collections.Generic.List<CuentaMayor> _ultimoLibroMayorSinAjustar = new System.Collections.Generic.List<CuentaMayor>();
         private EstadoResultado _ultimoEstadoResultado = new EstadoResultado();
@@ -211,11 +213,22 @@ namespace Contabilidad
             btnExportarExcel.Click += btnExportarExcel_Click;
             IconHelper.AplicarIconoBoton(btnExportarExcel, "Excel.ico");
 
+            var btnExportarPdf = new Button
+            {
+                Text = "Exportar a PDF",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(btnEliminarCuenta.Left, btnExportarExcel.Bottom + 8),
+                Size = btnEliminarCuenta.Size
+            };
+            btnExportarPdf.Click += btnExportarPdf_Click;
+            IconHelper.AplicarIconoBoton(btnExportarPdf, "ExportPdf.ico");
+
             tblConfiguración.Controls.Add(lblSeparador);
             tblConfiguración.Controls.Add(btnGuardarEstado);
             tblConfiguración.Controls.Add(btnCargarEstado);
             tblConfiguración.Controls.Add(btnEliminarEstado);
             tblConfiguración.Controls.Add(btnExportarExcel);
+            tblConfiguración.Controls.Add(btnExportarPdf);
         }
 
         /// <summary>
@@ -236,13 +249,14 @@ namespace Contabilidad
         private readonly TarjetaConTitulo _tarjFlujo = new TarjetaConTitulo("Flujo de Trabajo Contable");
         private readonly TarjetaConTitulo _tarjEvolucion = new TarjetaConTitulo("Evolución Mensual de Ingresos/Gastos");
         private readonly TarjetaConTitulo _tarjHerramientas = new TarjetaConTitulo("Herramientas de Exportación y Respaldo");
+        private readonly TarjetaConTitulo _tarjAccesos = new TarjetaConTitulo("Accesos Directos a Módulos");
 
         /// <summary>
-        /// Arma las 7 tarjetas del Dashboard (2 filas: graficos/indicadores arriba,
-        /// flujo de trabajo/tendencia/herramientas abajo). Cada tarjeta usa
-        /// TarjetaConTitulo como contenedor comun; el contenido especifico de cada una
-        /// (grafico, control de flujo, botones) se arma una sola vez aqui y despues solo
-        /// se actualiza con datos nuevos en ActualizarDashboard().
+        /// Arma las 8 tarjetas del Dashboard (2 filas de graficos/indicadores/herramientas
+        /// arriba, y una tercera fila de ancho completo con los accesos directos a cada
+        /// modulo). Cada tarjeta usa TarjetaConTitulo como contenedor comun; el contenido
+        /// especifico de cada una (grafico, control de flujo, botones) se arma una sola vez
+        /// aqui y despues solo se actualiza con datos nuevos en ActualizarDashboard().
         /// </summary>
         private void ConfigurarDashboard()
         {
@@ -358,8 +372,9 @@ namespace Contabilidad
             _tarjEvolucion.ContentPanel.Controls.Add(_chartEvolucion);
 
             ConfigurarHerramientas();
+            ConfigurarAccesosDirectos();
 
-            foreach (var tarjeta in new[] { _tarjBalance, _tarjResultados, _tarjEcuacion, _tarjCatalogo, _tarjFlujo, _tarjEvolucion, _tarjHerramientas })
+            foreach (var tarjeta in new[] { _tarjBalance, _tarjResultados, _tarjEcuacion, _tarjCatalogo, _tarjFlujo, _tarjEvolucion, _tarjHerramientas, _tarjAccesos })
             {
                 _pnlDashboard.Controls.Add(tarjeta);
             }
@@ -408,40 +423,76 @@ namespace Contabilidad
         /// </summary>
         private void ConfigurarHerramientas()
         {
-            var panelBotones = new FlowLayoutPanel { Dock = DockStyle.Top, Height = 44, FlowDirection = FlowDirection.LeftToRight, WrapContents = false };
+            var panelBotones = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = true,
+                Padding = new Padding(2)
+            };
 
-            var btnGuardar = new Button { Text = "Guardar estado", AutoSize = true, Height = 34 };
+            var btnGuardar = new Button { Text = "Guardar estado", AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
             btnGuardar.Click += btnGuardarEstado_Click;
             IconHelper.AplicarIconoBoton(btnGuardar, "Save.ico");
 
-            var btnCargar = new Button { Text = "Cargar estado", AutoSize = true, Height = 34 };
+            var btnCargar = new Button { Text = "Cargar estado", AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
             btnCargar.Click += btnCargarEstado_Click;
             IconHelper.AplicarIconoBoton(btnCargar, "Upload.ico");
 
-            var btnEliminar = new Button { Text = "Eliminar estado", AutoSize = true, Height = 34 };
+            var btnEliminar = new Button { Text = "Eliminar estado", AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
             btnEliminar.Click += btnEliminarEstado_Click;
             IconHelper.AplicarIconoBoton(btnEliminar, "Remove.ico");
+
+            var btnExportarExcelDestacado = new Button { Text = "Exportar a Excel", AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
+            btnExportarExcelDestacado.Click += btnExportarExcel_Click;
+            IconHelper.AplicarIconoBoton(btnExportarExcelDestacado, "Excel.ico");
+
+            var btnExportarPdfDestacado = new Button { Text = "Exportar a PDF", AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
+            btnExportarPdfDestacado.Click += btnExportarPdf_Click;
+            IconHelper.AplicarIconoBoton(btnExportarPdfDestacado, "ExportPdf.ico");
 
             panelBotones.Controls.Add(btnGuardar);
             panelBotones.Controls.Add(btnCargar);
             panelBotones.Controls.Add(btnEliminar);
+            panelBotones.Controls.Add(btnExportarExcelDestacado);
+            panelBotones.Controls.Add(btnExportarPdfDestacado);
 
-            var btnExportarDestacado = new Button
-            {
-                Text = "Exportar a Excel (con Fórmulas Reales)",
-                Dock = DockStyle.Bottom,
-                Height = 44,
-                BackColor = GridStyleHelper.ColorEncabezado,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font(Font, FontStyle.Bold)
-            };
-            btnExportarDestacado.FlatAppearance.BorderColor = GridStyleHelper.ColorEncabezado;
-            btnExportarDestacado.Click += btnExportarExcel_Click;
-            IconHelper.AplicarIconoBoton(btnExportarDestacado, "Excel.ico");
-
-            _tarjHerramientas.ContentPanel.Controls.Add(btnExportarDestacado);
             _tarjHerramientas.ContentPanel.Controls.Add(panelBotones);
+        }
+
+        /// <summary>
+        /// Un boton por cada modulo/pestaña de reportes (mismo orden e iconos que las
+        /// pestañas), para saltar directo a cualquiera desde el Dashboard sin tener que
+        /// buscarlo en la barra de pestañas.
+        /// </summary>
+        private void ConfigurarAccesosDirectos()
+        {
+            var panelBotones = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = true,
+                Padding = new Padding(2)
+            };
+
+            AgregarAccesoDirecto(panelBotones, "Libro diario", "LibroDiario.ico", tbpLibroDiario);
+            AgregarAccesoDirecto(panelBotones, "Libro mayor", "LibroMayorSinAjustes.ico", tbpLibroMayorSinAjustar);
+            AgregarAccesoDirecto(panelBotones, "Balance comprobación", "BalanceComprobacionSinAjustar.ico", tbpBalanceComprobacionSinAjustar);
+            AgregarAccesoDirecto(panelBotones, "Libro ajustes", "LibroAjustes.ico", tbpLibroAjustado);
+            AgregarAccesoDirecto(panelBotones, "Libro mayor ajustado", "libroMayor.ico", tbpLibroMayor);
+            AgregarAccesoDirecto(panelBotones, "Balance comprobación ajustado", "Balance.ico", tbpBalanceComprobacion);
+            AgregarAccesoDirecto(panelBotones, "Estado resultado", "EstadoResultado.ico", tbpEstadoResultado);
+            AgregarAccesoDirecto(panelBotones, "Balance general", "BalanceGeneral.ico", tbpBalanceGeneral);
+
+            _tarjAccesos.ContentPanel.Controls.Add(panelBotones);
+        }
+
+        private void AgregarAccesoDirecto(FlowLayoutPanel panel, string texto, string icono, TabPage destino)
+        {
+            var boton = new Button { Text = texto, AutoSize = true, Height = 34, Margin = new Padding(3, 3, 3, 6) };
+            boton.Click += (sender, e) => tabControl1.SelectedTab = destino;
+            IconHelper.AplicarIconoBoton(boton, icono);
+            panel.Controls.Add(boton);
         }
 
         private void PnlIndicadorEcuacion_Paint(object sender, PaintEventArgs e)
@@ -492,9 +543,11 @@ namespace Contabilidad
             _tarjFlujo.Size = new Size(500, 200);
             _tarjEvolucion.Size = new Size(380, 200);
             _tarjHerramientas.Size = new Size(380, 200);
+            _tarjAccesos.Size = new Size(1300, 110);
 
             var fila1 = new[] { _tarjBalance, _tarjResultados, _tarjEcuacion, _tarjCatalogo };
             var fila2 = new[] { _tarjFlujo, _tarjEvolucion, _tarjHerramientas };
+            var fila3 = new[] { _tarjAccesos };
 
             int anchoFila1 = fila1.Sum(t => t.Width) + espacio * (fila1.Length - 1);
             int xFila1 = Math.Max(espacio, (_pnlDashboard.ClientSize.Width - anchoFila1) / 2);
@@ -512,6 +565,15 @@ namespace Contabilidad
             {
                 tarjeta.Location = new Point(xFila2, y2);
                 xFila2 += tarjeta.Width + espacio;
+            }
+
+            int anchoFila3 = fila3.Sum(t => t.Width) + espacio * (fila3.Length - 1);
+            int xFila3 = Math.Max(espacio, (_pnlDashboard.ClientSize.Width - anchoFila3) / 2);
+            int y3 = y2 + fila2.Max(t => t.Height) + espacio;
+            foreach (var tarjeta in fila3)
+            {
+                tarjeta.Location = new Point(xFila3, y3);
+                xFila3 += tarjeta.Width + espacio;
             }
         }
 
@@ -667,13 +729,34 @@ namespace Contabilidad
                 try
                 {
                     _exportacionExcelService.Exportar(dlg.FileName);
-                    MessageBox.Show(this, "Archivo exportado correctamente en:\n" + dlg.FileName,
-                        "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start(dlg.FileName);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(this, "No se pudo exportar: " + ex.Message,
                         "Exportar a Excel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnExportarPdf_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new SaveFileDialog())
+            {
+                dlg.Filter = "Documento PDF (*.pdf)|*.pdf";
+                dlg.FileName = "contabilidad_" + DateTime.Now.ToString("ddMMyy_HHmmss") + ".pdf";
+
+                if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+                try
+                {
+                    _exportacionPdfService.Exportar(dlg.FileName);
+                    Process.Start(dlg.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, "No se pudo exportar: " + ex.Message,
+                        "Exportar a PDF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

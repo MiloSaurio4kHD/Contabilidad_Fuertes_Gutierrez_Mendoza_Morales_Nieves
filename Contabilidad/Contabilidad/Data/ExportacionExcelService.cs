@@ -30,23 +30,38 @@ namespace Contabilidad.Data
         public void Exportar(string ruta)
         {
             var hojas = new List<HojaExcel>();
-            var mapaMovimientos = new MapaMovimientos();
 
-            hojas.Add(ConstruirHojaLibroContable("Libro Diario", _libroDiarioRepository.ObtenerTodos().Cast<IAsientoLibro>().ToList(), mapaMovimientos));
-            hojas.Add(ConstruirHojaLibroContable("Libro Ajustes", _ajusteRepository.ObtenerTodos().Cast<IAsientoLibro>().ToList(), mapaMovimientos));
+            // Dos "receptores" de referencias de celda: mapaSinAjustar solo recibe lo que se
+            // escribe en Libro Diario (para Libro Mayor/Balance sin ajustar), mapaCompleto
+            // recibe Libro Diario + Libro Ajustes (para las versiones "ajustado"). Se llenan a
+            // la vez al construir cada hoja de asientos, en el mismo orden en que
+            // LibroMayorService arma sus listas, para que las hojas derivadas queden con
+            // formulas que apuntan de vuelta al origen en vez de numeros sueltos.
+            var mapaSinAjustar = new MapaMovimientos();
+            var mapaCompleto = new MapaMovimientos();
 
-            var cuentasMayor = _libroMayorService.ObtenerLibroMayor();
-            Dictionary<string, int> filaSumaPorCuenta;
-            hojas.Add(ConstruirHojaLibroMayor(cuentasMayor, mapaMovimientos, out filaSumaPorCuenta));
+            hojas.Add(ConstruirHojaLibroContable("Libro Diario", _libroDiarioRepository.ObtenerTodos().Cast<IAsientoLibro>().ToList(),
+                mapaSinAjustar, mapaCompleto));
 
-            hojas.Add(ConstruirHojaBalanceComprobacion(cuentasMayor, "Libro Mayor", filaSumaPorCuenta));
+            var cuentasMayorSinAjustar = _libroMayorService.ObtenerLibroMayorSinAjustar();
+            Dictionary<string, int> filaSumaSinAjustar;
+            hojas.Add(ConstruirHojaLibroMayor("Libro Mayor", cuentasMayorSinAjustar, mapaSinAjustar, out filaSumaSinAjustar));
+            hojas.Add(ConstruirHojaBalanceComprobacion("Balance Comprobación", cuentasMayorSinAjustar, "Libro Mayor", filaSumaSinAjustar));
+
+            hojas.Add(ConstruirHojaLibroContable("Libro Ajustes", _ajusteRepository.ObtenerTodos().Cast<IAsientoLibro>().ToList(),
+                mapaCompleto));
+
+            var cuentasMayorAjustado = _libroMayorService.ObtenerLibroMayor();
+            Dictionary<string, int> filaSumaAjustado;
+            hojas.Add(ConstruirHojaLibroMayor("Libro Mayor Ajustado", cuentasMayorAjustado, mapaCompleto, out filaSumaAjustado));
+            hojas.Add(ConstruirHojaBalanceComprobacion("Balance Comprobación Ajustado", cuentasMayorAjustado, "Libro Mayor Ajustado", filaSumaAjustado));
 
             var er = _estadoResultadoService.Generar();
             Dictionary<string, int> filasEstadoResultado;
-            hojas.Add(ConstruirHojaEstadoResultado(er, "Libro Mayor", filaSumaPorCuenta, out filasEstadoResultado));
+            hojas.Add(ConstruirHojaEstadoResultado(er, "Libro Mayor Ajustado", filaSumaAjustado, out filasEstadoResultado));
 
             var bg = _balanceGeneralService.Generar();
-            hojas.Add(ConstruirHojaBalanceGeneral(bg, "Estado Resultado", filasEstadoResultado, "Libro Mayor", filaSumaPorCuenta));
+            hojas.Add(ConstruirHojaBalanceGeneral(bg, "Estado Resultado", filasEstadoResultado, "Libro Mayor Ajustado", filaSumaAjustado));
 
             hojas.Add(ConstruirHojaCuentas(_cuentaRepository.ObtenerTodas()));
 
@@ -57,7 +72,7 @@ namespace Contabilidad.Data
         // Libro Diario / Libro Ajustes
         // ---------------------------------------------------------------
 
-        private static HojaExcel ConstruirHojaLibroContable(string nombreHoja, List<IAsientoLibro> asientos, MapaMovimientos mapaMovimientos)
+        private static HojaExcel ConstruirHojaLibroContable(string nombreHoja, List<IAsientoLibro> asientos, params MapaMovimientos[] mapas)
         {
             var hoja = new HojaExcel(nombreHoja) { ColumnasEncabezado = 5 };
             hoja.AnchoColumnas.AddRange(new[] { 10.0, 12.0, 40.0, 14.0, 14.0 });
@@ -79,7 +94,8 @@ namespace Contabilidad.Data
                     if (detalle.Debe > 0)
                     {
                         celdaDebe = CeldaExcel.DeNumero(detalle.Debe);
-                        mapaMovimientos.RegistrarDebe(detalle.CuentaCodigo, ExcelWriter.EnHoja(nombreHoja, ExcelWriter.Direccion(filaActual, 3)));
+                        string refDebe = ExcelWriter.EnHoja(nombreHoja, ExcelWriter.Direccion(filaActual, 3));
+                        foreach (var mapa in mapas) mapa.RegistrarDebe(detalle.CuentaCodigo, refDebe);
                     }
                     else
                     {
@@ -90,7 +106,8 @@ namespace Contabilidad.Data
                     if (detalle.Haber > 0)
                     {
                         celdaHaber = CeldaExcel.DeNumero(detalle.Haber);
-                        mapaMovimientos.RegistrarHaber(detalle.CuentaCodigo, ExcelWriter.EnHoja(nombreHoja, ExcelWriter.Direccion(filaActual, 4)));
+                        string refHaber = ExcelWriter.EnHoja(nombreHoja, ExcelWriter.Direccion(filaActual, 4));
+                        foreach (var mapa in mapas) mapa.RegistrarHaber(detalle.CuentaCodigo, refHaber);
                     }
                     else
                     {
@@ -162,11 +179,11 @@ namespace Contabilidad.Data
         // Libro Mayor
         // ---------------------------------------------------------------
 
-        private static HojaExcel ConstruirHojaLibroMayor(List<CuentaMayor> cuentas, MapaMovimientos mapaMovimientos, out Dictionary<string, int> filaSumaPorCuenta)
+        private static HojaExcel ConstruirHojaLibroMayor(string nombreHoja, List<CuentaMayor> cuentas, MapaMovimientos mapaMovimientos, out Dictionary<string, int> filaSumaPorCuenta)
         {
-            var hoja = new HojaExcel("Libro Mayor") { ColumnasEncabezado = 4 };
+            var hoja = new HojaExcel(nombreHoja) { ColumnasEncabezado = 4 };
             hoja.AnchoColumnas.AddRange(new[] { 10.0, 14.0, 10.0, 14.0 });
-            hoja.Filas.Add(FilaTitulo("Libro Mayor"));
+            hoja.Filas.Add(FilaTitulo(nombreHoja));
 
             filaSumaPorCuenta = new Dictionary<string, int>();
 
@@ -246,11 +263,11 @@ namespace Contabilidad.Data
         // Balance de Comprobación
         // ---------------------------------------------------------------
 
-        private static HojaExcel ConstruirHojaBalanceComprobacion(List<CuentaMayor> cuentas, string nombreHojaLibroMayor, Dictionary<string, int> filaSumaPorCuenta)
+        private static HojaExcel ConstruirHojaBalanceComprobacion(string nombreHoja, List<CuentaMayor> cuentas, string nombreHojaLibroMayor, Dictionary<string, int> filaSumaPorCuenta)
         {
-            var hoja = new HojaExcel("Balance Comprobación") { ColumnasEncabezado = 5 };
+            var hoja = new HojaExcel(nombreHoja) { ColumnasEncabezado = 5 };
             hoja.AnchoColumnas.AddRange(new[] { 40.0, 14.0, 14.0, 14.0, 14.0 });
-            hoja.Filas.Add(FilaTitulo("Balance Comprobación"));
+            hoja.Filas.Add(FilaTitulo(nombreHoja));
             hoja.Filas.Add(Fila(EstiloCelda.Encabezado, "Cuenta", "Suma Debe", "Suma Haber", "Saldo Deudor", "Saldo Acreedor"));
 
             int filaInicioDatos = hoja.Filas.Count + 1;

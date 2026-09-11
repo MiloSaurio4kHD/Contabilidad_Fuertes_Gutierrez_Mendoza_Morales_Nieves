@@ -30,6 +30,9 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("Total Gastos", er.TotalGastos, TipoFilaReporte.Subtotal));
 
             filas.Add(new FilaReporte("CÁLCULO DE UTILIDAD", null, TipoFilaReporte.Seccion));
+            filas.Add(new FilaReporte(
+                string.Format("Total Ingresos ({0:N2}) - Total Gastos ({1:N2})", er.TotalIngresos, er.TotalGastos),
+                null, TipoFilaReporte.Nota));
             filas.Add(new FilaReporte("Utilidad antes de participación", er.UtilidadAntesParticipacion, TipoFilaReporte.Detalle));
             filas.Add(new FilaReporte("(-) 15% Participación Trabajadores", -er.Participacion15, TipoFilaReporte.Detalle));
             filas.Add(new FilaReporte("Utilidad antes de Impuesto a la Renta", er.UtilidadAntesImpuesto, TipoFilaReporte.Detalle));
@@ -47,14 +50,14 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("Activos Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.ActivosCorrientes)
             {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
             }
             filas.Add(new FilaReporte("Total Activos Corrientes", bg.TotalActivoCorriente, TipoFilaReporte.Subtotal));
 
             filas.Add(new FilaReporte("Activos No Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.ActivosNoCorrientes)
             {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
             }
             filas.Add(new FilaReporte("Total Activos No Corrientes", bg.TotalActivoNoCorriente, TipoFilaReporte.Subtotal));
             filas.Add(new FilaReporte("TOTAL ACTIVOS", bg.TotalActivo, TipoFilaReporte.Total));
@@ -63,14 +66,14 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("Pasivos Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.PasivosCorrientes)
             {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
             }
             filas.Add(new FilaReporte("Total Pasivos Corrientes", bg.TotalPasivoCorriente, TipoFilaReporte.Subtotal));
 
             filas.Add(new FilaReporte("Pasivos No Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.PasivosNoCorrientes)
             {
-                filas.Add(new FilaReporte("    " + linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
             }
             filas.Add(new FilaReporte("Total Pasivos No Corrientes", bg.TotalPasivoNoCorriente, TipoFilaReporte.Subtotal));
             filas.Add(new FilaReporte("TOTAL PASIVOS", bg.TotalPasivo, TipoFilaReporte.Total));
@@ -78,7 +81,7 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("PATRIMONIO", null, TipoFilaReporte.Seccion));
             foreach (var linea in bg.Patrimonio)
             {
-                filas.Add(new FilaReporte(linea.Nombre, linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(new FilaReporte(NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
             }
             filas.Add(new FilaReporte("TOTAL PATRIMONIO", bg.TotalPatrimonio, TipoFilaReporte.Subtotal));
 
@@ -91,6 +94,16 @@ namespace Contabilidad.UI
                 null, bg.Cuadra ? TipoFilaReporte.Subtotal : TipoFilaReporte.Nota));
 
             return filas;
+        }
+
+        /// <summary>
+        /// Antepone "(-) " al nombre de una cuenta cuyo monto es negativo (resta al total
+        /// de su sección en vez de sumar), por ejemplo una depreciación acumulada dentro
+        /// de Activos No Corrientes o una pérdida del ejercicio dentro de Patrimonio.
+        /// </summary>
+        private static string NombreConSigno(LineaCuentaMonto linea)
+        {
+            return linea.Monto < 0 ? "(-) " + linea.Nombre : linea.Nombre;
         }
     }
 }
