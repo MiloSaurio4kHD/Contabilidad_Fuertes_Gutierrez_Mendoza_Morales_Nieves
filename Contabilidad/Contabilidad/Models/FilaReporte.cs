@@ -11,7 +11,8 @@ namespace Contabilidad.Models
         Detalle,
         Subtotal,
         Total,
-        Nota
+        Nota,
+        Advertencia
     }
 
     /// <summary>

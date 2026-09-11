@@ -50,14 +50,14 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("Activos Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.ActivosCorrientes)
             {
-                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(ConstruirFilaDetalleCuenta(linea, "    "));
             }
             filas.Add(new FilaReporte("Total Activos Corrientes", bg.TotalActivoCorriente, TipoFilaReporte.Subtotal));
 
             filas.Add(new FilaReporte("Activos No Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.ActivosNoCorrientes)
             {
-                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(ConstruirFilaDetalleCuenta(linea, "    "));
             }
             filas.Add(new FilaReporte("Total Activos No Corrientes", bg.TotalActivoNoCorriente, TipoFilaReporte.Subtotal));
             filas.Add(new FilaReporte("TOTAL ACTIVOS", bg.TotalActivo, TipoFilaReporte.Total));
@@ -66,14 +66,14 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("Pasivos Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.PasivosCorrientes)
             {
-                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(ConstruirFilaDetalleCuenta(linea, "    "));
             }
             filas.Add(new FilaReporte("Total Pasivos Corrientes", bg.TotalPasivoCorriente, TipoFilaReporte.Subtotal));
 
             filas.Add(new FilaReporte("Pasivos No Corrientes", null, TipoFilaReporte.Detalle));
             foreach (var linea in bg.PasivosNoCorrientes)
             {
-                filas.Add(new FilaReporte("    " + NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(ConstruirFilaDetalleCuenta(linea, "    "));
             }
             filas.Add(new FilaReporte("Total Pasivos No Corrientes", bg.TotalPasivoNoCorriente, TipoFilaReporte.Subtotal));
             filas.Add(new FilaReporte("TOTAL PASIVOS", bg.TotalPasivo, TipoFilaReporte.Total));
@@ -81,7 +81,7 @@ namespace Contabilidad.UI
             filas.Add(new FilaReporte("PATRIMONIO", null, TipoFilaReporte.Seccion));
             foreach (var linea in bg.Patrimonio)
             {
-                filas.Add(new FilaReporte(NombreConSigno(linea), linea.Monto, TipoFilaReporte.Detalle));
+                filas.Add(ConstruirFilaDetalleCuenta(linea, string.Empty));
             }
             filas.Add(new FilaReporte("TOTAL PATRIMONIO", bg.TotalPatrimonio, TipoFilaReporte.Subtotal));
 
@@ -104,6 +104,19 @@ namespace Contabilidad.UI
         private static string NombreConSigno(LineaCuentaMonto linea)
         {
             return linea.Monto < 0 ? "(-) " + linea.Nombre : linea.Nombre;
+        }
+
+        /// <summary>
+        /// Arma la fila de detalle de una cuenta del Balance General. Si la cuenta tiene
+        /// una advertencia de naturaleza (ver AdvertenciaSaldoHelper), se antepone el icono
+        /// de alerta en vez de la sangria normal, para que resalte junto con el color de la
+        /// fila que le aplica ReporteFinancieroDataGridView.
+        /// </summary>
+        private static FilaReporte ConstruirFilaDetalleCuenta(LineaCuentaMonto linea, string prefijoNormal)
+        {
+            bool tieneAdvertencia = linea.Advertencia != null;
+            string concepto = (tieneAdvertencia ? "⚠ " : prefijoNormal) + NombreConSigno(linea);
+            return new FilaReporte(concepto, linea.Monto, tieneAdvertencia ? TipoFilaReporte.Advertencia : TipoFilaReporte.Detalle);
         }
     }
 }

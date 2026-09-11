@@ -27,6 +27,17 @@ namespace Contabilidad.UI
         public static readonly Color ColorFilaGlosa = Color.FromArgb(0xF2, 0xF2, 0xF2);
         public static readonly Color ColorBordes = Color.FromArgb(0xB0, 0xB0, 0xB0);
 
+        /// <summary>
+        /// Fondo/texto ambar para advertir, sin ser tan alarmante como el rojo (ya usado
+        /// para "el balance no cuadra"), que una cuenta tiene un saldo contrario a su
+        /// naturaleza contable esperada (ej. un Activo con saldo acreedor). El texto usa un
+        /// marron muy oscuro (en vez del ambar original) para que tenga buen contraste
+        /// sobre el fondo claro, tanto en la grilla como en el icono "⚠", que en estos
+        /// controles se dibuja con este mismo color (no es el emoji a color).
+        /// </summary>
+        public static readonly Color ColorAdvertenciaFondo = Color.FromArgb(0xFF, 0xF3, 0xCD);
+        public static readonly Color ColorAdvertenciaTexto = Color.FromArgb(0x4A, 0x33, 0x00);
+
         public static void EstilizarBase(DataGridView dgv)
         {
             dgv.BorderStyle = BorderStyle.Fixed3D;

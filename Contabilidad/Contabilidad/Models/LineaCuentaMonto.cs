@@ -17,5 +17,11 @@ namespace Contabilidad.Models
         /// escribir una formula que apunte al Libro Mayor en vez de un numero suelto.
         /// </summary>
         public string Codigo { get; set; }
+
+        /// <summary>
+        /// Texto de advertencia (ver AdvertenciaSaldoHelper) si el saldo de esta cuenta es
+        /// contrario a su naturaleza contable esperada; null si el saldo es normal.
+        /// </summary>
+        public string Advertencia { get; set; }
     }
 }

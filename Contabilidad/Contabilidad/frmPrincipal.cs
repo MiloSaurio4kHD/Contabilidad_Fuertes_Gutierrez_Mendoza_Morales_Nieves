@@ -45,6 +45,9 @@ namespace Contabilidad
         private readonly Label _lblBuscarCuenta = new Label();
         private readonly TextBox _txtBuscarCuenta = new TextBox();
         private System.Collections.Generic.List<Cuenta> _todasLasCuentasCache = new System.Collections.Generic.List<Cuenta>();
+        private readonly AdvertenciasNaturalezaPanel pnlAdvertenciasBalanceComprobacion = new AdvertenciasNaturalezaPanel();
+        private readonly AdvertenciasNaturalezaPanel pnlAdvertenciasBalanceComprobacionSinAjustar = new AdvertenciasNaturalezaPanel();
+        private readonly AdvertenciasNaturalezaPanel pnlAdvertenciasBalanceGeneral = new AdvertenciasNaturalezaPanel();
 
         public frmPrincipal()
         {
@@ -62,6 +65,7 @@ namespace Contabilidad
             ConfigurarBuscadorCuentas();
             ConfigurarLibrosSinAjustar();
             ConfigurarDashboard();
+            ConfigurarPanelesAdvertencia();
 
             // WindowState=Maximized recien se aplica visualmente cuando la ventana se
             // muestra (Load todavia ve el tamaño de diseño), asi que el centrado del
@@ -134,6 +138,21 @@ namespace Contabilidad
 
             dgvBalanceComprobacionSinAjustar.Dock = DockStyle.Fill;
             tbpBalanceComprobacionSinAjustar.Controls.Add(dgvBalanceComprobacionSinAjustar);
+        }
+
+        /// <summary>
+        /// Agrega, debajo del Balance de Comprobacion (ajustado y sin ajustar) y del Balance
+        /// General, el panel que lista las advertencias de cuentas con saldo contrario a su
+        /// naturaleza contable (ver AdvertenciaSaldoHelper). Se agrega por codigo, igual que
+        /// el resto de controles de esta pantalla, para no tocar el Designer.
+        /// </summary>
+        private void ConfigurarPanelesAdvertencia()
+        {
+            if (GridStyleHelper.EnDisenio) return;
+
+            tbpBalanceComprobacion.Controls.Add(pnlAdvertenciasBalanceComprobacion);
+            tbpBalanceComprobacionSinAjustar.Controls.Add(pnlAdvertenciasBalanceComprobacionSinAjustar);
+            tbpBalanceGeneral.Controls.Add(pnlAdvertenciasBalanceGeneral);
         }
 
         /// <summary>
@@ -860,13 +879,19 @@ namespace Contabilidad
         /// </summary>
         private void ActualizarReportesDerivados()
         {
+            var catalogoPorCodigo = _cuentaRepository.ObtenerTodas()
+                .GroupBy(c => c.Codigo, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+
             _ultimoLibroMayor = _libroMayorService.ObtenerLibroMayor();
             RenderizarLibroMayorEn(pnlLibroMayor, _ultimoLibroMayor);
-            dgvBalanceComprobacion.CargarCuentas(_ultimoLibroMayor);
+            dgvBalanceComprobacion.CargarCuentas(_ultimoLibroMayor, catalogoPorCodigo);
+            pnlAdvertenciasBalanceComprobacion.Mostrar(dgvBalanceComprobacion.Advertencias);
 
             _ultimoLibroMayorSinAjustar = _libroMayorService.ObtenerLibroMayorSinAjustar();
             RenderizarLibroMayorEn(pnlLibroMayorSinAjustar, _ultimoLibroMayorSinAjustar);
-            dgvBalanceComprobacionSinAjustar.CargarCuentas(_ultimoLibroMayorSinAjustar);
+            dgvBalanceComprobacionSinAjustar.CargarCuentas(_ultimoLibroMayorSinAjustar, catalogoPorCodigo);
+            pnlAdvertenciasBalanceComprobacionSinAjustar.Mostrar(dgvBalanceComprobacionSinAjustar.Advertencias);
 
             CargarEstadoResultado();
             CargarBalanceGeneral();
@@ -883,6 +908,7 @@ namespace Contabilidad
         {
             _ultimoBalanceGeneral = _balanceGeneralService.Generar();
             dgvBalanceGeneral.CargarFilas(FilaReporteBuilder.ConstruirFilasBalanceGeneral(_ultimoBalanceGeneral));
+            pnlAdvertenciasBalanceGeneral.Mostrar(_ultimoBalanceGeneral.Advertencias);
         }
 
         /// <summary>

@@ -69,6 +69,12 @@ namespace Contabilidad.UI
                     case TipoFilaReporte.Nota:
                         row.DefaultCellStyle.Font = new Font(Font, FontStyle.Italic);
                         break;
+
+                    case TipoFilaReporte.Advertencia:
+                        row.DefaultCellStyle.BackColor = GridStyleHelper.ColorAdvertenciaFondo;
+                        row.DefaultCellStyle.ForeColor = GridStyleHelper.ColorAdvertenciaTexto;
+                        row.DefaultCellStyle.Font = new Font(Font, FontStyle.Bold);
+                        break;
                 }
             }
 

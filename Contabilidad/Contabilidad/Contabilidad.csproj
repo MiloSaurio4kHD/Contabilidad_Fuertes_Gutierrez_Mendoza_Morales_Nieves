@@ -86,6 +86,7 @@
     <Compile Include="Models\EstadoResultado.cs" />
     <Compile Include="Models\BalanceGeneral.cs" />
     <Compile Include="Models\FilaReporte.cs" />
+    <Compile Include="Models\AdvertenciaSaldoHelper.cs" />
     <Compile Include="Models\PuntoEvolucionMensual.cs" />
     <Compile Include="Data\JsonHelper.cs" />
     <Compile Include="Data\RutasApp.cs" />
@@ -137,6 +138,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\ReporteFinancieroDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\AdvertenciasNaturalezaPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />

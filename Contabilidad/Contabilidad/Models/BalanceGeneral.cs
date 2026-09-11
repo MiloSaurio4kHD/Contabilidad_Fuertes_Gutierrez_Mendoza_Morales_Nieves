@@ -36,6 +36,13 @@ namespace Contabilidad.Models
             get { return Math.Abs(TotalActivo - TotalPasivoMasPatrimonio) < 0.01m; }
         }
 
+        /// <summary>
+        /// Mensajes de advertencia (ver AdvertenciaSaldoHelper) de las cuentas cuyo saldo
+        /// resulto contrario a su naturaleza contable esperada. No afecta los totales ni
+        /// la ecuacion contable: es solo informativo para que el usuario revise los asientos.
+        /// </summary>
+        public List<string> Advertencias { get; set; }
+
         public BalanceGeneral()
         {
             ActivosCorrientes = new List<LineaCuentaMonto>();
@@ -43,6 +50,7 @@ namespace Contabilidad.Models
             PasivosCorrientes = new List<LineaCuentaMonto>();
             PasivosNoCorrientes = new List<LineaCuentaMonto>();
             Patrimonio = new List<LineaCuentaMonto>();
+            Advertencias = new List<string>();
         }
     }
 }

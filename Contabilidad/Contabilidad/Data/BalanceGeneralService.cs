@@ -33,28 +33,32 @@ namespace Contabilidad.Data
                 if (!catalogo.TryGetValue(cuentaMayor.Codigo, out cuenta)) continue;
                 if (cuentaMayor.Saldo == 0) continue;
 
+                string advertencia = AdvertenciaSaldoHelper.Detectar(cuenta, cuentaMayor.EsSaldoDeudor,
+                    cuentaMayor.EsSaldoDeudor ? cuentaMayor.SaldoDeudor : cuentaMayor.SaldoAcreedor);
+                if (advertencia != null) balance.Advertencias.Add(advertencia);
+
                 switch (cuenta.Tipo)
                 {
                     case TipoCuenta.ActivoCorriente:
-                        balance.ActivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
+                        balance.ActivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo, Advertencia = advertencia });
                         break;
 
                     case TipoCuenta.ActivoNoCorriente:
                         // Si el saldo neto quedo acreedor (depreciacion/amortizacion acumulada,
                         // por ejemplo), Saldo ya es negativo y se resta solo al sumar la lista.
-                        balance.ActivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
+                        balance.ActivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo, Advertencia = advertencia });
                         break;
 
                     case TipoCuenta.PasivoCorriente:
-                        balance.PasivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
+                        balance.PasivosCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo, Advertencia = advertencia });
                         break;
 
                     case TipoCuenta.PasivoNoCorriente:
-                        balance.PasivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
+                        balance.PasivosNoCorrientes.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo, Advertencia = advertencia });
                         break;
 
                     case TipoCuenta.Patrimonio:
-                        balance.Patrimonio.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo });
+                        balance.Patrimonio.Add(new LineaCuentaMonto { Nombre = cuenta.Nombre, Monto = -cuentaMayor.Saldo, Codigo = cuentaMayor.Codigo, Advertencia = advertencia });
                         break;
                 }
             }
